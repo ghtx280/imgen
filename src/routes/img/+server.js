@@ -3,7 +3,7 @@ import { createCanvas, loadImage } from '@napi-rs/canvas'
 function parseLayersPattern(l) {
     if (!l) return null;
 
-    return l.split('|').map((e) => {
+    return decodeURIComponent(l).split('|').map((e) => {
         let [_, type, data, params] = e.match(/(\w+):([^;]+)(?:;(.+))?/);
 
         params = params?.split(',').map((e) => {
@@ -53,7 +53,7 @@ async function generateImage(config) {
             ctx.translate(+p.x || 0, +p.y || 0);
             ctx.rotate(+p.r || 0);
             ctx.drawImage(
-                await loadImage(decodeURIComponent(p.data)),
+                await loadImage(p.data),
                 (+p.x || 0) / 2, (+p.y || 0) / 2, p.w, p.h
             );
             ctx.restore();
