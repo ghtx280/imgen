@@ -11,8 +11,6 @@ function parseLayersPattern(l) {
             return [k, +v || v];
         });
 
-        console.log(params);
-
         return {
             type,
             data,
@@ -34,22 +32,35 @@ async function generateImage(config) {
         ctx.fillRect(0, 0, config.width, config.height);
     }
 
+    // ctx.translate(0, 0);
+    // ctx.rotate(Math.PI / (180 / 0 || 0));
+    // // ctx.rotate(Math.PI / (180 / 45 || 0));
+    // ctx.fillStyle = "red"
+    // ctx.font = '24px Arial';
+    // ctx.textBaseline = "top"
+    // ctx.textAlign = "start"
+    // ctx.fillText(
+    //     'lorem',
+    //     0,
+    //     0
+    //     // p.x,
+    //     // p.y,
+    // );
+
     const create = {
-        async img(ctx, p) {
-            // ctx.save();
-            ctx.translate(config.width / 2, config.height / 2);
-            ctx.rotate(Math.PI / (180 / p.r));
+        async img(p) {
+            ctx.save();
+            ctx.translate(+p.x || 0, +p.y || 0);
+            ctx.rotate(+p.r || 0);
             ctx.drawImage(
                 await loadImage(p.data),
-                -config.width / 2 + (p.x || 0),
-                -config.height / 2 + (p.y || 0),
-                p.w,
-                p.h
+                (+p.x || 0) / 2, (+p.y || 0) / 2, p.w, p.h
             );
-            // ctx.restore();
+            ctx.restore();
         },
 
-        async txt(ctx, p) {
+        async txt(p) {
+            // console.log(p);
             const o_cfg = {
                 s: 'start',
                 c: 'center',
@@ -58,31 +69,28 @@ async function generateImage(config) {
                 t: 'top',
                 b: 'bottom',
             };
-            // console.log(p);
+            // // console.log(p);
             // ctx.save();
-            ctx.translate(config.width / 2, config.height / 2);
-            ctx.rotate(Math.PI / (180 / p.r || 0));
-            ctx.fillStyle = p.c || '#000000';
-            ctx.font = `${p.s || 16}px ${p.f || 'sans-serif'}`;
+            ctx.translate(+p.x || 0, +p.y || 0);
+            ctx.rotate(+p.r || 0)
+            ctx.fillStyle = p.c || 'black';
+            ctx.font = `${p.s || 16}px ${p.f || 'sans-serif' }`;
+
             const [ox, oy] = p.o || 'st';
-            ctx.textAlign = o_cfg[ox] || 'start';
-            ctx.textBaseline = o_cfg[oy] || 'top';
-            ctx.fillText(
-                p.data || 'lorem',
-                -config.width / 2 + (+p.x || 0),
-                -config.height / 2 + (+p.y || 0)
-                // p.x,
-                // p.y,
-            );
-            // ctx.restore();
+
+            
+            ctx.textAlign    = o_cfg[ox];
+            ctx.textBaseline = o_cfg[oy];
+
+            ctx.fillText( p.data || "lorem" , 0, 0 );
         },
     };
 
     for (const cfg of config.layers) {
         try {
-            await create[cfg.type]?.(ctx, cfg);
+            await create[cfg.type]?.(cfg);
         } catch (e) {
-            console.log(e);
+            console.log(e, "err");
         }
     }
 
@@ -108,6 +116,22 @@ export async function GET(e) {
         fill: e.url.searchParams.get('fill') || 'white',
         layers,
     })
+
+
+    // const { createCanvas, loadImage } = require('@napi-rs/canvas')
+
+    // const canvas = createCanvas(300, 320)
+    // const ctx = canvas.getContext('2d')
+
+
+    // ctx.save();
+    // ctx.font = '100px COLRv1'
+    // ctx.fillText('abc', 50, 300)
+    // ctx.restore();
+
+    // const imageData = canvas.toBuffer('image/png')
+
+    // console.log(imageData);
 
 
     return new Response(imageData, { 
