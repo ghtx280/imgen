@@ -50,11 +50,13 @@ async function generateImage(config) {
     const create = {
         async img(p) {
             ctx.save();
-            ctx.translate(+p.x || 0, +p.y || 0);
-            ctx.rotate(+p.r || 0);
+            ctx.translate(p.w / 2, p.h / 2);
+            ctx.rotate(Math.PI / (180 / +p.r || 0));
             ctx.drawImage(
                 await loadImage(p.data),
-                (+p.x || 0) / 2, (+p.y || 0) / 2, p.w, p.h
+                (-p.w/2) + (+p.x || 0),
+                (-p.h/2) + (+p.y || 0),
+                p.w, p.h
             );
             ctx.restore();
         },
