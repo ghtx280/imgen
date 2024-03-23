@@ -53,7 +53,7 @@ async function generateImage(config) {
             ctx.translate(+p.x || 0, +p.y || 0);
             ctx.rotate(+p.r || 0);
             ctx.drawImage(
-                await loadImage(p.data),
+                await loadImage(decodeURIComponent(p.data)),
                 (+p.x || 0) / 2, (+p.y || 0) / 2, p.w, p.h
             );
             ctx.restore();
