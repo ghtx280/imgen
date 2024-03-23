@@ -49,16 +49,27 @@ async function generateImage(config) {
 
     const create = {
         async img(p) {
+            console.log(p.w, p.h);
+            p.w = +p.w || config.width
+            p.h = +p.h || config.height
             ctx.save();
             ctx.translate(p.w / 2, p.h / 2);
-            ctx.rotate(Math.PI / (180 / +p.r || 0));
+            ctx.rotate(Math.PI / (180 / (+p.r || 0)));
             ctx.drawImage(
                 await loadImage(p.data),
-                (-p.w/2) + (+p.x || 0),
-                (-p.h/2) + (+p.y || 0),
-                p.w, p.h
+                (-p.w / 2) + (+p.x || 0),
+                (-p.h / 2) + (+p.y || 0),
+                p.w,
+                p.h,
             );
             ctx.restore();
+
+            console.log(
+                (-(p.w || 100)/2) + (+p.x || 0),
+                (-(p.h || 100)/2) + (+p.y || 0),
+                (p.w || 100),
+                (p.h || 100),
+            );
         },
 
         async txt(p) {
