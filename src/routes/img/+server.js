@@ -1,4 +1,4 @@
-import { createCanvas, loadImage } from 'canvas'
+import { createCanvas, loadImage } from '@napi-rs/canvas'
 
 function parseLayersPattern(l) {
     if (!l) return null;
@@ -27,7 +27,7 @@ async function generateImage(config) {
     const ctx = canvas.getContext('2d');
 
     // Clear canvas
-    ctx.clearRect(0, 0, config.width, config.height);
+    // ctx.clearRect(0, 0, config.width, config.height);
 
     if (config.fill) {
         ctx.fillStyle = config.fill;
@@ -36,7 +36,7 @@ async function generateImage(config) {
 
     const create = {
         async img(ctx, p) {
-            ctx.save();
+            // ctx.save();
             ctx.translate(config.width / 2, config.height / 2);
             ctx.rotate(Math.PI / (180 / p.r));
             ctx.drawImage(
@@ -46,7 +46,7 @@ async function generateImage(config) {
                 p.w,
                 p.h
             );
-            ctx.restore();
+            // ctx.restore();
         },
 
         async txt(ctx, p) {
@@ -58,8 +58,8 @@ async function generateImage(config) {
                 t: 'top',
                 b: 'bottom',
             };
-            console.log(p);
-            ctx.save();
+            // console.log(p);
+            // ctx.save();
             ctx.translate(config.width / 2, config.height / 2);
             ctx.rotate(Math.PI / (180 / p.r || 0));
             ctx.fillStyle = p.c || '#000000';
@@ -74,7 +74,7 @@ async function generateImage(config) {
                 // p.x,
                 // p.y,
             );
-            ctx.restore();
+            // ctx.restore();
         },
     };
 
@@ -85,7 +85,7 @@ async function generateImage(config) {
             console.log(e);
         }
     }
-    
+
     const imageData = canvas.toBuffer('image/png');
 
     return imageData;
