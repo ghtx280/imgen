@@ -12,7 +12,7 @@ export default function(l) {
                 .filter(Boolean)
                 .map((e) => {
                     const [k, v] = e.split(':');
-                    return [k, +v || v];
+                    return [k, v.startsWith("0x") ? v : (+v || v)];
                 });
 
             return {

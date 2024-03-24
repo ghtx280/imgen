@@ -1,3 +1,4 @@
+import { hex } from "../helpers.js";
 import wrapText from "../wrapText.js";
 
 const origin = {
@@ -19,7 +20,7 @@ export async function txt(p) {
     let y = +p.y || 0
     let rotate = +p.r || 0
     let color = p.c || 'black'
-    let font = p.f || 'sans-serif'
+    let font = p.f || 'Arial sans-serif Ubuntu'
     let size = p.s || 16
 
     let data = p.data || 'lorem'
@@ -29,8 +30,10 @@ export async function txt(p) {
     this.ctx.save();
     this.ctx.translate(x, y);
     this.ctx.rotate(Math.PI / (180 / rotate));
-    this.ctx.fillStyle = color;
+
+    this.ctx.fillStyle = hex(color);
     this.ctx.font = `${p.w || 500} ${size}px ${font}`;
+    console.log(this.ctx.font);
     this.ctx.textAlign = origin[ox];
     this.ctx.textBaseline = origin[oy];
 

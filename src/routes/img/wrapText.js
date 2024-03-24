@@ -31,7 +31,7 @@ export default function(ctx, text, x, y, maxWidth, lineHeight, ox, oy) {
         testLine += `${words[n]}${space ? ' ' : ''}`;
         let metrics = ctx.measureText(testLine);
         let testWidth = metrics.width;
-        console.log(testWidth);
+
         // If the width of this test line is more than the max width
         if (testWidth > maxWidth && n > 0) {
             // Then the line is finished, push the current line into "lineArray"

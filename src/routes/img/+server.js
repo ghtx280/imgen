@@ -17,8 +17,6 @@ export async function GET(e) {
     globalThis.Path2D = Path2D
     globalThis.loadImage = loadImage
 
-    console.log(GlobalFonts.families);
-
     const [width, height] = e.url.searchParams.get('s')?.split('x') || [
         100, 100,
     ];

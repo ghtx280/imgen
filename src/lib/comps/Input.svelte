@@ -1,33 +1,32 @@
 <script lang="ts">
-    export let 
-        value: string | undefined | number = "", 
-        oninput: (...e: any) => any,
-        label: string = "";
+    export let value: string | undefined | number = '',
+        label: string = '',
+        def: string = '0';
 
-    $: oninput(value)
+    value ||= def;
 
     function slide(node: HTMLSpanElement) {
-        let pressed = false
+        let pressed = false;
 
-        addEventListener("mousemove", (e) => {
+        addEventListener('mousemove', (e) => {
             if (pressed && value !== undefined) {
-                value = +value + Math.round(e.movementX / 2)
+                value = +value + Math.round(e.movementX / 2);
             }
-        })
+        });
 
-        node.addEventListener("mousedown", () => pressed = true)
-        addEventListener("mouseup", () => pressed = false)
+        node.addEventListener('mousedown', () => (pressed = true));
+        addEventListener('mouseup', () => (pressed = false));
     }
-
 </script>
 
 <div flex="5 ai-c">
     {#if label}
-        <span 
-            use:slide 
-            class="cursor-ew-resize select-none"
-            text="500 up"
-        >{label}</span>
+        <span use:slide class="cursor-ew-resize select-none" text="500 up"
+            >{label}</span
+        >
     {/if}
-    <input class="w-100" type="number" bind:value on:input={() => console.log(55)}>
+    <input class="w-100" type="number" bind:value on:click={e => {
+        // @ts-ignore
+        e.target?.select();
+    }} />
 </div>
