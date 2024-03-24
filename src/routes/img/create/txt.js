@@ -20,7 +20,7 @@ export async function txt(p) {
     let y = +p.y || 0
     let rotate = +p.r || 0
     let color = p.c || 'black'
-    let font = p.f || 'Arial sans-serif Ubuntu'
+    let font = p.f || 'sans-serif'
     let size = p.s || 16
 
     let data = p.data || 'lorem'

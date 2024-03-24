@@ -8,6 +8,7 @@
     import PanelMain   from "$lib/comps/PanelMain.svelte";
     import TextArea    from "$lib/comps/TextArea.svelte";
     import { hex0x } from "./img/helpers";
+    import { onMount } from "svelte";
 
     // @ts-ignore
 
@@ -38,8 +39,22 @@
         }`
     }
 
+    let local: any = null
 
-    $: if (canvas && browser) render($config)
+    onMount(() => {
+        
+
+        local = localStorage.getItem("imgnx-config")
+
+        try {
+            $config = local ? JSON.parse(local) : $config 
+        } catch (error) {
+            
+        }
+
+    })
+
+    $: if (canvas && browser) render( $config )
 
     function render(cfg: any) {
         ctx = ctx || canvas?.getContext("2d")
@@ -57,6 +72,8 @@
             })
 
             linkData = createLinkData(cfg)
+
+            localStorage.setItem("imgnx-config", JSON.stringify(cfg))
         }
 
 
@@ -94,7 +111,7 @@
 
 
 
-    <PanelMain   />
+    <PanelMain />
     
     {#if $config.layers.length}
        <PanelLayout />
