@@ -9,8 +9,7 @@
         class="p-10 w-full" 
         text="left dots"
         on:click={ev => {            
-            $current = index;
-            location.hash = "#panel"
+            $current = index
         }}
     >
         {index} {item.type}:  {item.data?.$name || item.data}

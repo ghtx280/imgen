@@ -50,23 +50,23 @@
     </button>
 </div>
 
-<div flex="10 ai-c">
+<div flex="10 ai-c" class="mt-10">
     <Input label="x" bind:value={$config.layers[$current].x} />
     <Input label="y" bind:value={$config.layers[$current].y} />
 
     <Move />
 </div>
 
-<div flex="10 ai-c">
+<div flex="10 ai-c" class="mt-10">
     <Input label="w" bind:value={$config.layers[$current].w} />
     <Input label="h" bind:value={$config.layers[$current].h} />
 
     <Scale />
 </div>
 
-<div flex="10">
-    <Input label="r"  bind:value={$config.layers[$current].r} />
-    <Input label="rd" bind:value={$config.layers[$current].rd} />
+<div flex="10 ai-c" class="mt-10">
+    <Input label="⟳"  bind:value={$config.layers[$current].r} />
+    <Input label="r" bind:value={$config.layers[$current].rd} />
 </div>
 
 

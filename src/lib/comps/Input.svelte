@@ -21,9 +21,12 @@
 
 <div flex="5 ai-c">
     {#if label}
-        <span use:slide class="cursor-ew-resize select-none" text="500 up"
-            >{label}</span
+        <span 
+            use:slide 
+            class="cursor-ew-resize select-none min-w-16" text="500 up mono 18"
         >
+            {label}
+        </span>
     {/if}
     <input class="w-100" type="number" bind:value on:click={e => {
         // @ts-ignore

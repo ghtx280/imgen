@@ -58,6 +58,13 @@
 
     $: if (canvas && browser) render( $config )
 
+    let saved = true
+
+    function saveUrl() {
+        goto(linkData)
+        saved = true
+    }
+
     function render(cfg: any) {
         ctx = ctx || canvas?.getContext("2d")
 
@@ -74,11 +81,21 @@
                 
             })
 
-            linkData = createLinkData(cfg).replace(/\s/g, "%20")
+            linkData = "?" + createLinkData(cfg).replace(/\s/g, "%20")
 
-            goto(`?${linkData}`)
+            saved = location.search == linkData
+            
+          
+            // history.replaceState({}, 'Title', "?" + linkData);
         }
 
+
+        addEventListener("beforeunload", (event) => {
+            if (!saved) {
+                event.preventDefault();
+                event.returnValue = true;
+            }
+        })
 
         
         
@@ -101,25 +118,46 @@
 </script>
 
 <div class="h-screen flex">
-    <div id="panel" class="w-full" flex="col jc-sb ai-s">
+    <div id="panel" class="w-full" flex="col center">
 
         <!-- <img src={imageSrc} alt="" width={$config.width} height={$config.height} style="display: none;"> -->
         
         <canvas bind:this={canvas} ></canvas>
 
 
-        <p class="p-30 select-all w-60% over-hidden text-wrap fixed bottom-0">
-            https://imgenx.vercel.app/img?{linkData}
+        <p class="p-30 select-all w-60% over-hidden text-wrap fixed bottom-0 left-0">
+            https://imgenx.vercel.app/img{linkData}
         </p>
 
     </div>
 
 
 
-    <PanelMain />
+    <div id="panel" class="bl-1 w-400 shrink-0 p-30">
+        
+        <div class="mb-20" flex="space">
+            
+            <!-- {#if } -->
+                <button 
+                    class="btn" 
+                    class:invisible={$current == null} 
+                    on:click={() => $current = null }
+                >{'< Back'}</button>
+            <!-- {/if} -->
+
+            <button 
+                class="btn bg-$green-2 { !saved ? "outline-3+solid+$red" : "" }" 
+                on:click={saveUrl}
+            >Save</button>
+        </div>
+
+        {#if $config.layers.length && $current !== null}
+            <PanelLayout {saveUrl} />
+        {:else}
+            <PanelMain {saveUrl} />
+        {/if}
+    </div>
     
-    {#if $config.layers.length && $current !== null}
-       <PanelLayout />
-    {/if}
+    
 </div>
 
