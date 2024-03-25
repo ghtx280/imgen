@@ -21,6 +21,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@napi-rs/canvas": "^0.1.51"
+		"@napi-rs/canvas": "^0.1.51",
+		"@sveltejs/adapter-vercel": "^5.2.0",
+		"@vercel/analytics": "^1.2.2"
 	}
 }
