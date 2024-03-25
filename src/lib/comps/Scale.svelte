@@ -2,23 +2,31 @@
     import { config, current } from "$lib/store.js";
 
     function scaling(node) {
-    let pressed = false;
+        let pressed = false;
+        
 
-    function scale(value, movement) {
-        return +value + (movement / 2)
-    }
-
-    node.addEventListener("mousedown", () => pressed = true );
-
-    addEventListener("mouseup", () => pressed = false);
-
-    addEventListener("mousemove", (event) => {
-        if (pressed) {
-            $config.layers[$current].w = scale($config.layers[$current].w, event.movementY);
-            $config.layers[$current].h = scale($config.layers[$current].h, event.movementY);
+        function scale(value, movement, ratio) {
+            return +value + Math.round((movement / 2) * ratio)
         }
-    })
-}
+
+        // 500 + 500 / (500 / 250) = 1000
+
+        // 250 + 500 / (500 / 250) = 750
+
+        node.addEventListener("mousedown", () => pressed = true );
+
+        addEventListener("mouseup", () => pressed = false);
+
+        addEventListener("mousemove", (event) => {
+            if (pressed) {
+                let obj = $config.layers[$current]
+                let ratio = obj.w / obj.h;
+
+                $config.layers[$current].w = scale(obj.w, event.movementY, 1);
+                $config.layers[$current].h = scale(obj.h, event.movementY, 1);
+            }
+        })
+    }
 </script>
 
 

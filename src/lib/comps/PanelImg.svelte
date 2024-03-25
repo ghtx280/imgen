@@ -1,6 +1,7 @@
 <script>
     import { browser } from "$app/environment";
     import { config, current, images } from "$lib/store.js";
+    import { onMount } from "svelte";
     import Input from "./Input.svelte";
     import Move from "./Move.svelte";
     import Scale from "./Scale.svelte";
@@ -22,22 +23,16 @@
 
 
     async function setImg() {
-        if (browser) {
-            // if (imgName) {
-                
-            // }
-            // $images[imgName] = 
-
-            // console.log([$images[imgName]]);
-
-            $config.layers[$current].data = {
-                $name: imgName,
-                $elem: await loadImage(imgName)
-            }
+        $config.layers[$current].data = {
+            $name: imgName,
+            $elem: await loadImage(imgName)
         }
     }
 
-    setImg()
+
+    onMount(() => {
+        setImg()
+    })
 </script>
 
 

@@ -56,6 +56,24 @@
 
     })
 
+    function setLoadImage() {
+        if (typeof window !== "undefined") {
+            // @ts-ignore
+            window.loadImage = async function(url: string) {
+                return new Promise((res) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        res(img);
+                    }
+                    // img.crossOrigin="anonymous"
+                    img.src = url;
+                })
+            }
+        }
+    }
+
+    $: if (canvas && browser) setLoadImage()
+
     $: if (canvas && browser) render( $config )
 
     let saved = true
@@ -101,19 +119,7 @@
 
         
         
-        if (typeof window !== "undefined") {
-            // @ts-ignore
-            window.loadImage = async function(url: string) {
-                return new Promise((res) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        res(img);
-                    }
-                    // img.crossOrigin="anonymous"
-                    img.src = url;
-                })
-            }
-        }
+        
         
         
     }

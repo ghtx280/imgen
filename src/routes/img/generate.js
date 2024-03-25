@@ -12,6 +12,7 @@ export async function generateImage(ctx, config) {
 
     for (const cfg of config.layers) {
         try {
+            console.log(cfg);
             await create[cfg.type]?.(cfg);
         } catch (err) {
             console.log(err);
