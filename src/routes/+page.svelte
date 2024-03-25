@@ -109,7 +109,7 @@
                     img.onload = () => {
                         res(img);
                     }
-                    img.crossOrigin="anonymous"
+                    // img.crossOrigin="anonymous"
                     img.src = url;
                 })
             }
