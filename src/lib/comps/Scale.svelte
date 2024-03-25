@@ -14,8 +14,8 @@
 
     addEventListener("mousemove", (event) => {
         if (pressed) {
-            $config.layers[$current].w = scale($config.layers[$current].w, event.movementX);
-            $config.layers[$current].h = scale($config.layers[$current].h, event.movementX);
+            $config.layers[$current].w = scale($config.layers[$current].w, event.movementY);
+            $config.layers[$current].h = scale($config.layers[$current].h, event.movementY);
         }
     })
 }
