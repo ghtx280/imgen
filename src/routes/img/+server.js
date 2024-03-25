@@ -28,9 +28,9 @@ export async function GET(e) {
     let canvasRes = await generateImage(ctx, config);
 
 
-    return new Response(canvasRes.toBuffer('image/png'), {
+    return new Response(canvas.toBuffer('image/webp', 75), {
         headers: {
-            'Content-Type': 'image/png',
+            'Content-Type': 'image/webp',
         },
     });
 }
