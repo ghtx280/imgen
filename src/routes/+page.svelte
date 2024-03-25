@@ -74,7 +74,7 @@
                 
             })
 
-            linkData = createLinkData(cfg)
+            linkData = createLinkData(cfg).replace(/\s/g, "%20")
 
             goto(`?${linkData}`)
         }
@@ -108,7 +108,9 @@
         <canvas bind:this={canvas} ></canvas>
 
 
-        <p class="p-30 select-all w-full over-hidden">https://imgenx.vercel.app/img?{linkData}</p>
+        <p class="p-30 select-all w-60% over-hidden text-wrap fixed bottom-0">
+            https://imgenx.vercel.app/img?{linkData}
+        </p>
 
     </div>
 
