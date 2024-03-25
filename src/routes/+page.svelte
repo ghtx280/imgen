@@ -1,6 +1,6 @@
 <script lang="ts">
     import { generateImage } from "./img/generate";
-    import { browser       } from "$app/environment";
+    import { browser, dev       } from "$app/environment";
     import { config, current        } from "$lib/store";
     
     import Input       from "$lib/comps/Input.svelte";
@@ -76,7 +76,7 @@
 
             generateImage(ctx, cfg).then(e => {
                 
-                // imageSrc = ctx?.canvas.toDataURL("image/png", 75)
+                // imageSrc = ctx?.canvas.toDataURL("image/webp", 75)
                 // console.log(imageSrc);
                 
             })
@@ -98,6 +98,8 @@
         })
 
         
+
+        
         
         if (typeof window !== "undefined") {
             // @ts-ignore
@@ -107,6 +109,7 @@
                     img.onload = () => {
                         res(img);
                     }
+                    img.crossOrigin="anonymous"
                     img.src = url;
                 })
             }
@@ -120,9 +123,16 @@
 <div class="h-screen flex">
     <div id="panel" class="w-full" flex="col center">
 
-        <!-- <img src={imageSrc} alt="" width={$config.width} height={$config.height} style="display: none;"> -->
+        <!-- {#if !dev} -->
+            
+        <!-- {:else} -->
+            <!-- <img src={imageSrc} alt="" width={$config.width} height={$config.height} style=""> -->
+        <!-- {/if} -->
         
-        <canvas bind:this={canvas} ></canvas>
+
+        <canvas bind:this={canvas}></canvas>
+        
+        
 
 
         <p class="p-30 select-all w-60% over-hidden text-wrap fixed bottom-0 left-0">
