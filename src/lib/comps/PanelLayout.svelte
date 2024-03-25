@@ -10,14 +10,19 @@
 
     $: data = $config.layers[$current];
 
-    $: show = $page.url.hash == '#panel';
+    // $: show = $page.url.hash == '#panel';
 </script>
 
-{#if show}
+<!-- {#if show} -->
     <div class="panel-text bl-1 w-400 shrink-0 p-30 bg-white fixed right-0 h-full">
-        <a href="#main" class="p-8+15 r-5 bg-tp b-1 mb-20 block w-fit">
+        <button
+            class="p-8+15 r-5 bg-tp b-1 mb-20 block w-fit"
+            on:click={() => {
+                $current = null
+            }}
+        >
             {'< Back'}
-        </a>
+        </button>
 
         {#if data?.type == 'txt'}
             <PanelTxt />
@@ -27,4 +32,4 @@
             <PanelImg />
         {/if}
     </div>
-{/if}
+<!-- {/if} -->

@@ -26,7 +26,10 @@ export let config = writable({
     ],
 })
 
-export let current = writable("0")
+export let current = writable(null)
 
 
 export let images = writable({})
+
+
+export let panelOpen = writable(false)

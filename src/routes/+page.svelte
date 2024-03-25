@@ -1,7 +1,7 @@
 <script lang="ts">
     import { generateImage } from "./img/generate";
     import { browser       } from "$app/environment";
-    import { config        } from "$lib/store";
+    import { config, current        } from "$lib/store";
     
     import Input       from "$lib/comps/Input.svelte";
     import PanelLayout from "$lib/comps/PanelLayout.svelte";
@@ -9,6 +9,9 @@
     import TextArea    from "$lib/comps/TextArea.svelte";
     import { hex0x } from "./img/helpers";
     import { onMount } from "svelte";
+    import { page } from "$app/stores";
+    import parseConfig from "./img/parseConfig";
+    import { goto } from "$app/navigation";
 
     // @ts-ignore
 
@@ -42,12 +45,11 @@
     let local: any = null
 
     onMount(() => {
-        
-
-        local = localStorage.getItem("imgnx-config")
+        local = $page.url.search
 
         try {
-            $config = local ? JSON.parse(local) : $config 
+            // @ts-ignore
+            $config = local ? parseConfig(local) : $config 
         } catch (error) {
             
         }
@@ -66,14 +68,15 @@
             ctx?.clearRect(0, 0, cfg.width, cfg.height)
 
             generateImage(ctx, cfg).then(e => {
-                // imageSrc = ctx?.canvas.toDataURL("image/png")
+                
+                // imageSrc = ctx?.canvas.toDataURL("image/png", 75)
                 // console.log(imageSrc);
                 
             })
 
             linkData = createLinkData(cfg)
 
-            localStorage.setItem("imgnx-config", JSON.stringify(cfg))
+            goto(`?${linkData}`)
         }
 
 
@@ -100,12 +103,12 @@
 <div class="h-screen flex">
     <div id="panel" class="w-full" flex="col jc-sb ai-s">
 
-        <!-- <img src={imageSrc} alt="" width={config.width} height={config.height} > -->
+        <!-- <img src={imageSrc} alt="" width={$config.width} height={$config.height} style="display: none;"> -->
         
-        <canvas bind:this={canvas}></canvas>
+        <canvas bind:this={canvas} ></canvas>
 
 
-        <p class="p-30 select-all">https://imgenx.vercel.app/img?{linkData}</p>
+        <p class="p-30 select-all w-full over-hidden">https://imgenx.vercel.app/img?{linkData}</p>
 
     </div>
 
@@ -113,7 +116,7 @@
 
     <PanelMain />
     
-    {#if $config.layers.length}
+    {#if $config.layers.length && $current !== null}
        <PanelLayout />
     {/if}
 </div>

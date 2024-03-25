@@ -2,6 +2,7 @@
     import { config, current } from "$lib/store.js";
     import { hex } from "../../routes/img/helpers.js";
     import Input from "./Input.svelte";
+    import Move from "./Move.svelte";
     import TextArea from "./TextArea.svelte";
 
     // export let current = 0
@@ -17,13 +18,17 @@
     // console.log($config.layers[$current]);
 
     $: $config.layers[$current] ||= {}
+
+    
 </script>
 
 <TextArea bind:value={$config.layers[$current].data} />
 
-<div flex="10">
+<div flex="10 ai-c">
     <Input label="x" bind:value={$config.layers[$current].x} />
     <Input label="y" bind:value={$config.layers[$current].y} />
+
+    <Move />
 </div>
 
 <div flex="10">

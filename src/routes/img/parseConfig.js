@@ -1,7 +1,18 @@
-export default function(l) {
-    if (!l) return null;
+import { hex } from "./helpers.js";
 
-    return decodeURIComponent(l)
+export default function(searchParamsString) {
+    if (!searchParamsString) return null;
+
+    let p = new URLSearchParams(searchParamsString)
+
+
+    const [width, height] = p.get('s')?.split('x') || [
+        100, 100,
+    ];
+
+    const fill = p.get("fill") || "#888888"
+
+    const layers = p.get("l") ? decodeURIComponent(p.get("l"))
         .split('|')
         .filter(Boolean)
         .map((e) => {
@@ -20,5 +31,12 @@ export default function(l) {
                 data,
                 ...(params ? Object.fromEntries(params) : {}),
             };
-        });
+        }) : []
+
+        return {
+            width: +width,
+            height: +height,
+            fill: hex(fill),
+            layers,
+        }
 }

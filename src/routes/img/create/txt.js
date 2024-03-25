@@ -33,7 +33,7 @@ export async function txt(p) {
 
     this.ctx.fillStyle = hex(color);
     this.ctx.font = `${p.w || 500} ${size}px ${font}`;
-    console.log(this.ctx.font);
+    // console.log(this.ctx.font);
     this.ctx.textAlign = origin[ox];
     this.ctx.textBaseline = origin[oy];
 
