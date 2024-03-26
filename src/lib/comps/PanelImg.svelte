@@ -49,6 +49,11 @@
 </div>
 
 <div flex="10 ai-c" class="mt-10">
-    <Input label="⟳" bind:value={$config.layers[$current].r} />
+    <Input
+        label="⟳"
+        bind:value={$config.layers[$current].r}
+        min={0}
+        max={360}
+    />
     <Input label="r" bind:value={$config.layers[$current].rd} min={0} />
 </div>

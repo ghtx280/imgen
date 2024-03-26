@@ -2,7 +2,8 @@
     export let value: string | undefined | number = '',
         label: string = '',
         def: string = '0',
-        min: number | null = null;
+        min: number | null = null,
+        max: number | null = null;
 
     value ||= def;
 
@@ -14,6 +15,10 @@
                 value = +value + Math.round(e.movementX / 2);
                 if (min !== null && value < min) {
                     value = min;
+                }
+
+                if (max !== null && value > max) {
+                    value = max;
                 }
             }
         });
