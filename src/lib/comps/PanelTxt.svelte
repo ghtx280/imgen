@@ -3,6 +3,7 @@
     import { hex } from '../../routes/img/helpers.js';
     import Input from './Input.svelte';
     import Move from './Move.svelte';
+    import PanelOrigin from './PanelOrigin.svelte';
     import TextArea from './TextArea.svelte';
 
     // export let current = 0
@@ -30,21 +31,14 @@
 
 <div flex="10 ai-c" class="mt-10">
     <Input label="s" bind:value={$config.layers[$current].s} />
-    <Input
-        label="r"
-        bind:value={$config.layers[$current].r}
-        min={0}
-        max={360}
-    />
+    <Input label="r" bind:value={$config.layers[$current].r} min={0} max={360} />
 </div>
 
 <div flex="20 ai-c" class="mt-20">
     <input type="color" bind:value={$config.layers[$current].c} />
     <div flex="start center 10">
         <span text="16 mono">weight</span>
-        <select
-            on:change={(e) => ($config.layers[$current].w = e.target.value)}
-        >
+        <select on:change={(e) => ($config.layers[$current].w = e.target.value)}>
             {#each [1, 2, 3, 4, 5, 6, 7, 8, 9] as item}
                 <option value="{item}00">{item}00</option>
             {/each}
@@ -52,19 +46,4 @@
     </div>
 </div>
 
-<div flex="5 col" class="mt-20">
-    <span>orgin</span>
-
-    <div grid="cols-3 ji-c ai-c" class="sq-70 b-1 r-5">
-        {#each ['t', 'm', 'b'] as y}
-            {#each ['s', 'c', 'e'] as x}
-                <button
-                    value={x + y}
-                    class="h:scale-1.5 h:bg-$blue sq-60% bg-gray time-100 r-99"
-                    on:click={(e) => ($config.layers[$current].o = x + y)}
-                >
-                </button>
-            {/each}
-        {/each}
-    </div>
-</div>
+<PanelOrigin />

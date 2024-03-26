@@ -5,6 +5,7 @@
     import Input from './Input.svelte';
     import Move from './Move.svelte';
     import Scale from './Scale.svelte';
+    import PanelOrigin from './PanelOrigin.svelte';
 
     $: $config.layers[$current] ||= {};
 
@@ -20,7 +21,7 @@
     async function setImg() {
         $config.layers[$current].data = {
             $name: imgName,
-            $elem: await loadImage(imgName),
+            $elem: await loadImage(imgName)
         };
     }
 
@@ -31,7 +32,7 @@
 
 <div flex="10 ai-c">
     <input type="text" class="px-20 h-40 r-5 b-1 w-full" bind:value={imgName} />
-    <button class="px-20 h-40 r-5 b-1" on:click={setImg}> set </button>
+    <button class="px-20 h-40 r-5 b-1" on:click={setImg}>set</button>
 </div>
 
 <div flex="10 ai-c" class="mt-10">
@@ -49,11 +50,8 @@
 </div>
 
 <div flex="10 ai-c" class="mt-10">
-    <Input
-        label="⟳"
-        bind:value={$config.layers[$current].r}
-        min={0}
-        max={360}
-    />
+    <Input label="⟳" bind:value={$config.layers[$current].r} min={0} max={360} />
     <Input label="r" bind:value={$config.layers[$current].rd} min={0} />
 </div>
+
+<PanelOrigin />

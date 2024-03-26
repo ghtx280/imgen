@@ -16,6 +16,7 @@
                 c: '#000000',
                 s: '24',
                 r: 0,
+                o: 'st'
             });
 
             $config.layers = $config.layers;
@@ -30,14 +31,13 @@
                 h: 100,
                 r: 0,
                 rd: 0,
+                o: 'cm'
             });
 
             $config.layers = $config.layers;
-        },
+        }
     };
 </script>
-
-
 
 <div flex="20" class="mt-10">
     <input type="color" bind:value={$config.fill} />
