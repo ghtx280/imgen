@@ -1,4 +1,5 @@
 <script>
+    import icon from '$lib/icon.js';
     import { config, current } from '$lib/store.js';
 
     function scaling(node) {
@@ -23,7 +24,7 @@
                 let ow = obj.w;
                 let oh = obj.h;
 
-                $config.layers[$current].w = scale(obj.w, event.movementY);
+                $config.layers[$current].w = Math.round(scale(obj.w, event.movementY));
                 $config.layers[$current].h = ($config.layers[$current].w * oh) / ow;
             }
         });
@@ -31,5 +32,5 @@
 </script>
 
 <button class="rel sq-30 r-5 b-1" flex="center" use:scaling>
-    <span text="34" class="abs translate-3+-2 rotate-45">↕</span>
+    {@html icon.maximize2(20, '#eee', 1.5)}
 </button>

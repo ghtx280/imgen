@@ -1,57 +1,70 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-		<!-- ====== analytics ====== -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZHYTKQH7H"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'G-1ZHYTKQH7H');
-		</script>
-		<!-- ======================= -->
 
-		%sveltekit.head%
+	<!-- ====== analytics ====== -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ZHYTKQH7H"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-1ZHYTKQH7H');
+	</script>
+	<!-- ======================= -->
 
-		<style>
-			input[type="number"]::-webkit-inner-spin-button,
-			input[type="number"]::-webkit-outer-spin-button {
-				display: block;
-			}
+	%sveltekit.head%
 
-			input, textarea, select{
-				/* margin: 5px; */
-				border-width: 1px;
-				border-radius: 5px;
-				padding: 5px;
-			}
+	<style>
+		input[type="number"]::-webkit-inner-spin-button,
+		input[type="number"]::-webkit-outer-spin-button {
+			display: block;
+		}
 
-			input[type="color"] {
-				width: 50px;
-				height: 50px;
-			}
+		input,
+		textarea,
+		select {
+			/* margin: 5px; */
+			border-width: 1px;
+			border-radius: 5px;
+			padding: 5px;
+			background: #333;
+		}
 
-			button {
-				cursor: pointer;
-			}
+		input[type="color"] {
+			width: 50px;
+			height: 50px;
+		}
 
-			.btn {
-				padding: 10px;
-				border-radius: 5px;
-				border-width: 1px;
-			}
-		</style>
+		button {
+			cursor: pointer;
+			background: #333;
+		}
+
+		.btn {
+			padding: 10px;
+			border-radius: 5px;
+			border-width: 1px;
+			background: #333;
+
+		}
+
+		* {
+			border-color: #555 !important;
+		}
+	</style>
 
 
-		<script src="https://unpkg.com/blickcss@2.1.11"></script>
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+	<script src="https://unpkg.com/blickcss@2.1.11"></script>
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
 </html>
