@@ -30,11 +30,7 @@
 
 <div flex="5 ai-c">
     {#if label}
-        <span
-            use:slide
-            class="cursor-ew-resize select-none min-w-16"
-            text="500 up mono 18"
-        >
+        <span use:slide class="cursor-ew-resize select-none min-w-16" text="500 up mono 18">
             {label}
         </span>
     {/if}
@@ -45,6 +41,5 @@
         on:click={(e) => {
             // @ts-ignore
             e.target?.select();
-        }}
-    />
+        }} />
 </div>
