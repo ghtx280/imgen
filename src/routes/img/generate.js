@@ -1,6 +1,6 @@
-import { img } from "./create/img.js";
-import { txt } from "./create/txt.js";
-import { hex } from "./helpers.js";
+import { img } from './create/img.js';
+import { txt } from './create/txt.js';
+import { hex } from './helpers.js';
 
 export async function generateImage(ctx, config) {
     if (config.fill) {
@@ -12,7 +12,7 @@ export async function generateImage(ctx, config) {
 
     for (const cfg of config.layers) {
         try {
-            console.log(cfg);
+            // console.log(cfg);
             await create[cfg.type]?.(cfg);
         } catch (err) {
             console.log(err);

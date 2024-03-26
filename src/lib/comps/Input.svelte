@@ -1,7 +1,8 @@
 <script lang="ts">
     export let value: string | undefined | number = '',
         label: string = '',
-        def: string = '0';
+        def: string = '0',
+        min: number = 0;
 
     value ||= def;
 
@@ -11,6 +12,9 @@
         addEventListener('mousemove', (e) => {
             if (pressed && value !== undefined) {
                 value = +value + Math.round(e.movementX / 2);
+                if (value < min) {
+                    value = min;
+                }
             }
         });
 
@@ -21,15 +25,21 @@
 
 <div flex="5 ai-c">
     {#if label}
-        <span 
-            use:slide 
-            class="cursor-ew-resize select-none min-w-16" text="500 up mono 18"
+        <span
+            use:slide
+            class="cursor-ew-resize select-none min-w-16"
+            text="500 up mono 18"
         >
             {label}
         </span>
     {/if}
-    <input class="w-100" type="number" bind:value on:click={e => {
-        // @ts-ignore
-        e.target?.select();
-    }} />
+    <input
+        class="w-100"
+        type="number"
+        bind:value
+        on:click={(e) => {
+            // @ts-ignore
+            e.target?.select();
+        }}
+    />
 </div>
