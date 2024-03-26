@@ -2,7 +2,7 @@
     export let value: string | undefined | number = '',
         label: string = '',
         def: string = '0',
-        min: number = 0;
+        min: number | null = null;
 
     value ||= def;
 
@@ -12,7 +12,7 @@
         addEventListener('mousemove', (e) => {
             if (pressed && value !== undefined) {
                 value = +value + Math.round(e.movementX / 2);
-                if (value < min) {
+                if (min !== null && value < min) {
                     value = min;
                 }
             }

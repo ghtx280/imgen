@@ -1,8 +1,8 @@
 export async function img(p) {
-    p.w = +p.w || this.config.width;
-    p.h = +p.h || this.config.height;
-    p.x = +p.x || this.config.height / 2;
-    p.y = +p.y || this.config.height / 2;
+    p.w = +p.w ?? this.config.width;
+    p.h = +p.h ?? this.config.height;
+    p.x = +p.x ?? this.config.height / 2;
+    p.y = +p.y ?? this.config.height / 2;
 
     this.ctx.save();
 
