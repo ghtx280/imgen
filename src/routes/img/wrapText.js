@@ -1,13 +1,13 @@
 
 
-// @description: wrapText wraps HTML canvas text onto a canvas of fixed width
-// @param ctx - the context for the canvas we want to wrap text on
-// @param text - the text we want to wrap.
-// @param x - the X starting point of the text on the canvas.
-// @param y - the Y starting point of the text on the canvas.
-// @param maxWidth - the width at which we want line breaks to begin - i.e. the maximum width of the canvas.
-// @param lineHeight - the height of each line, so we can space them below each other.
-// @returns an array of [ lineText, x, y ] for all lines
+
+const caclOrigin = w => ({
+    s: w,
+    c: w / 2,
+    e: 0
+})
+
+
 export default function(ctx, text, x, y, maxWidth, lineHeight, ox, oy) {
     // First, start by splitting all of our text into words, but splitting it into an array split by spaces
     let words = text.split(' ');
@@ -30,7 +30,7 @@ export default function(ctx, text, x, y, maxWidth, lineHeight, ox, oy) {
         // Create a test line, and measure it..
         testLine += `${words[n]}${space ? ' ' : ''}`;
         let metrics = ctx.measureText(testLine);
-        let testWidth = metrics.width;
+        let testWidth = caclOrigin(metrics.width)[ox];
 
         // If the width of this test line is more than the max width
         if (testWidth > maxWidth && n > 0) {
