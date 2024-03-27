@@ -28,15 +28,6 @@ export default async function(this: ItemThis, p: LayerShp) {
     this.ctx.translate(p.x, p.y);
     this.ctx.rotate(Math.PI / (180 / (toNum(p.r) || 0)));
 
-    // if (toNum(p.bw)) {
-    //     this.ctx.save();
-    //     this.ctx.beginPath();
-    //     this.ctx.strokeStyle = hex(p.bc || "#000000");
-    //     this.ctx.lineWidth = toNum(p.bw) || 0
-    //     this.ctx.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0)
-    //     this.ctx.stroke()
-    //     this.ctx.restore();
-    // }
 
     CreateStroke(this.ctx, p, x, y)
 

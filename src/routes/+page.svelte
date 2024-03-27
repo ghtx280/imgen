@@ -16,6 +16,7 @@
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
+    import { stringifyLayer } from '$lib/stringifyLayer';
 
     let ctx: Ctx | undefined | null;
     let canvas: Canvas | undefined | null;
@@ -32,7 +33,7 @@
                     ';' +
                     Object.entries(e)
                         .map(([k, v]) => {
-                            if (k !== 'data' && k !== 'type') {
+                            if (k !== 'data' && k !== 'type' && !k.startsWith('$')) {
                                 return `${k}:${['c', 'bc'].includes(k) ? hex0x(v as string) : v}`;
                             }
                         })
@@ -126,6 +127,13 @@
             }
         });
     }
+
+    function copyLayer() {
+        if ($current == null) return;
+
+        navigator.clipboard.writeText(stringifyLayer($config.layers[$current]));
+        alert('Layer copied!');
+    }
 </script>
 
 <div class="h-screen flex bg-#222 *:c-#eee">
@@ -141,9 +149,19 @@
 
     <div id="tools_panel" class="bl-1 shrink-0 p-30" style="width: 400px;">
         <div class="mb-20" flex="space">
-            <button class="btn" flex="10 ai-c" class:invisible={$current == null} on:click={() => ($current = null)}>
-                {@html icon.arrowLeft(20)} Back
-            </button>
+            <div flex="10">
+                <button
+                    class="btn"
+                    flex="10 ai-c"
+                    class:invisible={$current == null}
+                    on:click={() => ($current = null)}>
+                    {@html icon.arrowLeft(20)} Back
+                </button>
+
+                <button class="btn" flex="10 ai-c" class:invisible={$current == null} on:click={copyLayer}>
+                    {@html icon.copy(20)}
+                </button>
+            </div>
 
             <button class="btn bg-$green-3 {!saved ? 'outline-3+solid+$red' : ''}" on:click={saveUrl}>Save</button>
         </div>
