@@ -1,4 +1,5 @@
 <script>
+    import icon from '$lib/icon.js';
     import { config, current } from '$lib/store.js';
 
     export let index, item;
@@ -6,12 +7,12 @@
 
 <div class="r-5 b-1 over-hidden" flex="space">
     <button
-        class="p-10 w-full"
-        text="left dots"
+        class="p-10 w-full h-full"
+        text="left dots mono"
         on:click={(ev) => {
             $current = index;
         }}>
-        {index}
+        <strong>{index}.</strong>
         {item.type}: {item.data?.$name || item.data}
     </button>
 
@@ -22,6 +23,6 @@
             $current = null;
             // config = config
         }}>
-        X
+        {@html icon.trash2(16)}
     </button>
 </div>

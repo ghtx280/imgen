@@ -1,33 +1,11 @@
 <script>
     import { config, current } from '$lib/store.js';
-    import { onMount } from 'svelte';
+
     import Input from '$lib/ui/Input.svelte';
     import Move from '$lib/ui/Move.svelte';
     import Scale from '$lib/ui/Scale.svelte';
     import Origin from '$lib/ui/Origin.svelte';
     import Color from '$lib/ui/Color.svelte';
-
-    $: $config.layers[$current] ||= {};
-
-    let img = $config.layers[$current].data;
-    let imgName = img;
-    let imgElem = null;
-
-    if (img.$name) {
-        imgName = img.$name;
-        imgElem = img.$elem;
-    }
-
-    async function setImg() {
-        $config.layers[$current].data = {
-            $name: imgName,
-            $elem: await loadImage(imgName)
-        };
-    }
-
-    onMount(() => {
-        setImg();
-    });
 </script>
 
 <div flex="10 ai-c" class="mt-10">
@@ -52,10 +30,9 @@
 <hr />
 
 <div class="">
-    <span>Image</span>
+    <span>Fill</span>
     <div flex="10 ai-c" class="mt-10">
-        <input type="text" class="px-20 h-40 r-5 b-1 w-full" bind:value={imgName} />
-        <button class="px-20 h-40 r-5 b-1" on:click={setImg}>set</button>
+        <Color bind:value={$config.layers[$current].c} />
     </div>
 </div>
 

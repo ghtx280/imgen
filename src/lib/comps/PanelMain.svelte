@@ -1,7 +1,7 @@
 <script>
     import PanelLayerBtn from './PanelLayerBtn.svelte';
     import { config, current } from '$lib/store.js';
-    import Input from './Input.svelte';
+    import Input from '$lib/ui/Input.svelte';
 
     export let saveUrl;
 
@@ -35,6 +35,22 @@
             });
 
             $config.layers = $config.layers;
+        },
+        shp() {
+            $config.layers.push({
+                type: 'shp',
+                data: 'rect',
+                x: 50,
+                y: 50,
+                w: 100,
+                h: 100,
+                c: '#555555',
+                r: 0,
+                rd: 0,
+                o: 'st'
+            });
+
+            $config.layers = $config.layers;
         }
     };
 </script>
@@ -46,9 +62,12 @@
 </div>
 
 <div flex="20" class="mt-10">
-    <button class="btn" on:click={add.img}>Add Img</button>
-    <button class="btn" on:click={add.txt}>Add Txt</button>
+    <button class="btn" on:click={add.img}>Add Image</button>
+    <button class="btn" on:click={add.txt}>Add Text</button>
+    <button class="btn" on:click={add.shp}>Add Shape</button>
 </div>
+
+<hr />
 
 <div class="mt-20" flex="20 col">
     {#each $config.layers || [] as item, index}

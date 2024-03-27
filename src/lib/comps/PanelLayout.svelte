@@ -1,7 +1,7 @@
 <script>
-    import { page } from '$app/stores';
     import { config, current } from '$lib/store.js';
     import PanelImg from './PanelImg.svelte';
+    import PanelShp from './PanelShp.svelte';
     import PanelTxt from './PanelTxt.svelte';
 
     $: data = $config.layers[$current];
@@ -11,12 +11,14 @@
     saveUrl();
 </script>
 
-
-
 {#if data?.type == 'txt'}
     <PanelTxt />
 {/if}
 
 {#if data?.type == 'img'}
     <PanelImg />
+{/if}
+
+{#if data?.type == 'shp'}
+    <PanelShp />
 {/if}

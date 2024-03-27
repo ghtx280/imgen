@@ -1,17 +1,18 @@
 import { GlobalFonts, Path2D, createCanvas, loadImage } from '@napi-rs/canvas';
-import { json } from '@sveltejs/kit';
-import { generateImage } from './generate.js';
-import parseConfig from './parseConfig.js';
+import { json, type RequestHandler } from '@sveltejs/kit';
+import { generateImage } from '../../lib/generate.js';
+import parseConfig from '../../lib/parseConfig.js';
 
 
-function makeError(error) {
+function makeError(error: string) {
     return json({ error }, { status: 400 })
 }
 
-
-/** @type {import('./$types').RequestHandler} */
-export async function GET(e) {
+export const GET: RequestHandler = async (e) => {
+    // @ts-ignore
     globalThis.Path2D = Path2D
+    
+    // @ts-ignore
     globalThis.loadImage = loadImage
 
     const config = parseConfig(e.url.search)
@@ -33,4 +34,6 @@ export async function GET(e) {
             'Content-Type': 'image/webp',
         },
     });
-}
+};
+
+

@@ -12,7 +12,8 @@
 
         addEventListener('mousemove', (e) => {
             if (pressed && value !== undefined) {
-                value = +value + Math.round(e.movementX / 2);
+                value =
+                    +value + Math.round(e.shiftKey ? e.movementX * 2 : e.ctrlKey ? e.movementX / 5 : e.movementX / 2);
                 if (min !== null && value < min) {
                     value = min;
                 }

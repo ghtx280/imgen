@@ -1,24 +1,24 @@
 <script lang="ts">
-    import { generateImage } from './img/generate';
+    import type { Canvas, Ctx } from '$lib/types';
+
+    import { generateImage } from '$lib/generate';
     import { browser, dev } from '$app/environment';
     import { config, current } from '$lib/store';
+    import { hex0x } from '$lib/helpers';
 
-    import Input from '$lib/comps/Input.svelte';
-    import PanelLayout from '$lib/comps/PanelLayout.svelte';
-    import PanelMain from '$lib/comps/PanelMain.svelte';
-    import TextArea from '$lib/comps/TextArea.svelte';
-    import { hex0x } from './img/helpers';
-    import { onMount } from 'svelte';
-    import { page } from '$app/stores';
-    import parseConfig from './img/parseConfig';
-    import { goto } from '$app/navigation';
+    import parseConfig from '../lib/parseConfig';
     import icon from '$lib/icon';
 
-    // @ts-ignore
+    import PanelLayout from '$lib/comps/PanelLayout.svelte';
+    import PanelMain from '$lib/comps/PanelMain.svelte';
+    import TextArea from '$lib/ui/TextArea.svelte';
 
-    let imageSrc: any = '';
-    let ctx: CanvasRenderingContext2D | undefined | null;
-    let canvas: HTMLCanvasElement | undefined | null;
+    import { onMount } from 'svelte';
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+
+    let ctx: Ctx | undefined | null;
+    let canvas: Canvas | undefined | null;
 
     let linkData: string = '';
 
@@ -33,7 +33,7 @@
                     Object.entries(e)
                         .map(([k, v]) => {
                             if (k !== 'data' && k !== 'type') {
-                                return `${k}:${k == 'c' ? hex0x(v) : v}`;
+                                return `${k}:${['c', 'bc'].includes(k) ? hex0x(v as string) : v}`;
                             }
                         })
                         .filter(Boolean)
@@ -81,7 +81,7 @@
         saved = true;
     }
 
-    function render(cfg: any) {
+    async function render(cfg: any) {
         ctx = ctx || canvas?.getContext('2d');
 
         if (canvas && ctx) {
@@ -90,16 +90,11 @@
 
             ctx?.clearRect(0, 0, cfg.width, cfg.height);
 
-            generateImage(ctx, cfg).then((e) => {
-                // imageSrc = ctx?.canvas.toDataURL("image/webp", 75)
-                // console.log(imageSrc);
-            });
+            await generateImage(ctx, cfg);
 
             linkData = '?' + createLinkData(cfg).replace(/\s/g, '%20');
 
             saved = location.search == linkData;
-
-            // history.replaceState({}, 'Title', "?" + linkData);
         }
 
         addEventListener('beforeunload', (event) => {
@@ -110,58 +105,31 @@
         });
     }
 
-    let tip = true;
+    function resizer(node: HTMLDivElement, width: number) {
+        let pressed = false;
 
-    $: if (browser) tip = localStorage.getItem('imgenx-tip-showed') == 'yes';
+        let panel = document.querySelector('#tools_panel') as HTMLDivElement;
+
+        addEventListener('mouseup', () => {
+            pressed = false;
+            document.body.style.userSelect = '';
+        });
+        node.addEventListener('mousedown', () => {
+            pressed = true;
+            document.body.style.userSelect = 'none';
+        });
+
+        addEventListener('mousemove', (e) => {
+            if (pressed) {
+                width = width - e.movementX;
+                panel.style.width = `${width}px`;
+            }
+        });
+    }
 </script>
 
-{#if !tip}
-    <div class="fullscreen bg-black/60" flex="center">
-        <div class="bg-f p-40 r-20 b-1 max-w-600" flex="20 col">
-            <h4>Як користуватися? / How to use?</h4>
-            <p></p>
-            <p>
-                Ukr (🇺🇦): <br />
-                Натисніть кнопку "Add Img", щоб додати зображення, або "Add Txt", щоб додати текст. Коли ви створите елемент,
-                він з'явиться у вигляді списку, натисніть на нього, щоб відредагувати. Ви можете перетягнути мишею W H X
-                Y, щоб змінити розмір
-            </p>
-            <p>
-                Eng (🇺🇸): <br />
-                Click the "Add Img" button to add an image, or "Add Txt" to add text. When you create an item, it will appear
-                as a list, click on it to edit it. You can drag a mouse W H X Y to resize
-            </p>
-
-            <div flex="20 ai-c">
-                <button
-                    class="btn bg-0 w-fit px-40 c-f"
-                    on:click={() => {
-                        tip = true;
-                    }}>
-                    Close
-                </button>
-
-                <button
-                    class="btn bg-0 w-fit px-40 c-f"
-                    on:click={() => {
-                        tip = true;
-                        localStorage.setItem('imgenx-tip-showed', 'yes');
-                    }}>
-                    Don't show again
-                </button>
-            </div>
-        </div>
-    </div>
-{/if}
-
 <div class="h-screen flex bg-#222 *:c-#eee">
-    <div id="panel" class="w-full" flex="col center">
-        <!-- {#if !dev} -->
-
-        <!-- {:else} -->
-        <!-- <img src={imageSrc} alt="" width={$config.width} height={$config.height} style=""> -->
-        <!-- {/if} -->
-
+    <div id="сanvas_panel" class="w-full" flex="col center">
         <canvas bind:this={canvas}></canvas>
 
         <p class="p-30 select-all w-60% over-hidden text-wrap fixed bottom-0 left-0">
@@ -169,16 +137,18 @@
         </p>
     </div>
 
-    <div id="panel" class="bl-1 w-400 shrink-0 p-30">
+    <div class="h-full w-10 cursor-ew-resize" use:resizer={400}></div>
+
+    <div id="tools_panel" class="bl-1 shrink-0 p-30" style="width: 400px;">
         <div class="mb-20" flex="space">
-            <!-- {#if } -->
             <button class="btn" flex="10 ai-c" class:invisible={$current == null} on:click={() => ($current = null)}>
                 {@html icon.arrowLeft(20)} Back
             </button>
-            <!-- {/if} -->
 
             <button class="btn bg-$green-3 {!saved ? 'outline-3+solid+$red' : ''}" on:click={saveUrl}>Save</button>
         </div>
+
+        <hr />
 
         {#if $config.layers.length && $current !== null}
             <PanelLayout {saveUrl} />

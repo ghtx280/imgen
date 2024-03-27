@@ -1,5 +1,6 @@
-import { hex } from '../helpers.js';
-import wrapText from '../wrapText.js';
+import type { ItemThis, LayerTxt, OriginX, OriginY } from '$lib/types.js';
+import { hex, toNum } from '../helpers.js';
+import wrapText from '../../routes/img/wrapText.js';
 
 const origin = {
     s: 'start',
@@ -10,20 +11,27 @@ const origin = {
     b: 'bottom',
 };
 
-export async function txt(p) {
+export default async function(this: ItemThis, p: LayerTxt) {
     let cw = this.config.width;
     let hw = this.config.height;
 
-    let x = +p.x ?? 0;
-    let y = +p.y ?? 0;
-    let rotate = +p.r || 0;
+    let x = toNum(p.x) ?? 0;
+    let y = toNum(p.y) ?? 0;
+
+    let rotate = toNum(p.r) || 0;
     let color = p.c || 'black';
     let font = p.f || 'sans-serif';
     let size = p.s || 16;
 
     let data = p.data || 'lorem';
 
-    let [ox, oy] = p.o || 'st';
+    // let [ox, oy] = p?.o || 'st';
+
+    let ox = (p.o?.[0] as OriginX) || 's'
+    let oy = (p.o?.[1] as OriginY) || 't'
+
+    
+    
 
     this.ctx.save();
     this.ctx.translate(x, y);
@@ -32,16 +40,16 @@ export async function txt(p) {
     this.ctx.fillStyle = hex(color);
     this.ctx.font = `${p.w || 500} ${size}px ${font}`;
     // console.log(this.ctx.font);
-    this.ctx.textAlign = origin[ox];
-    this.ctx.textBaseline = origin[oy];
+    this.ctx.textAlign = origin[ox] as CanvasTextAlign;
+    this.ctx.textBaseline = origin[oy] as CanvasTextBaseline;
 
     let wrappedText = wrapText(
         this.ctx,
         data,
         0,
         0,
-        +p.max || cw - x,
-        +p.lh || 50,
+        toNum(p.max) || cw - x,
+        toNum(p.lh) || 50,
         ox,
         oy
     );

@@ -9,10 +9,6 @@
             return +value + Math.round(movement / 2);
         }
 
-        // 500 + 500 / (500 / 250) = 1000
-
-        // 250 + 500 / (500 / 250) = 750
-
         node.addEventListener('mousedown', () => (pressed = true));
 
         addEventListener('mouseup', () => (pressed = false));
@@ -26,6 +22,9 @@
 
                 $config.layers[$current].w = Math.round(scale(obj.w, event.movementY));
                 $config.layers[$current].h = ($config.layers[$current].w * oh) / ow;
+
+                $config.layers[$current].w = $config.layers[$current].w?.toFixed?.(1);
+                $config.layers[$current].h = $config.layers[$current].h?.toFixed?.(1);
             }
         });
     }
