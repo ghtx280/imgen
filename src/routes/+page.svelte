@@ -17,6 +17,7 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import { stringifyLayer } from '$lib/stringifyLayer';
+    import Tip from '$lib/ui/Tip.svelte';
 
     let ctx: Ctx | undefined | null;
     let canvas: Canvas | undefined | null;
@@ -135,6 +136,8 @@
         alert('Layer copied!');
     }
 </script>
+
+<Tip />
 
 <div class="h-screen flex bg-#222 *:c-#eee">
     <div id="сanvas_panel" class="w-full" flex="col center">
