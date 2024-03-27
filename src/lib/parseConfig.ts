@@ -15,7 +15,7 @@ export default function(searchParamsString: string) {
         .map((e) => {
             let [_, type, data, params]: any[] = e.match(/(\w+):([^;]+)(?:;(.+))?/) || ["", "", "", ""]
 
-            params = params.split(',')
+            params = params?.split(',')
                 .filter(Boolean)
                 .map((e: string) => {
                     const [k, v] = e.split(':');
