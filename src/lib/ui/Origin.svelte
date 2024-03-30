@@ -6,25 +6,16 @@
             const cur = $config.layers[$current];
             const [ox, oy] = cur.o || 'st';
 
-            if (x == ox) return;
+            if (x !== ox) {
+                if (ox == 's') cur.x += x == 'c' ? cur.w / 2 : cur.w;
+                if (ox == 'c') cur.x += x == 's' ? -(cur.w / 2) : cur.w / 2;
+                if (ox == 'e') cur.x += x == 'c' ? -(cur.w / 2) : -cur.w;
+            }
 
-            if (ox == 's' && x == 'c') {
-                cur.x = cur.x + cur.w / 2;
-            }
-            if (ox == 's' && x == 'e') {
-                cur.x = cur.x + cur.w;
-            }
-            if (ox == 'c' && x == 's') {
-                cur.x = cur.x - cur.w / 2;
-            }
-            if (ox == 'c' && x == 'e') {
-                cur.x = cur.x + cur.w / 2;
-            }
-            if (ox == 'e' && x == 's') {
-                cur.x = cur.x - cur.w;
-            }
-            if (ox == 'e' && x == 'c') {
-                cur.x = cur.x - cur.w / 2;
+            if (y !== oy) {
+                if (oy == 't') cur.y += y == 'm' ? cur.h / 2 : cur.h;
+                if (oy == 'm') cur.y += y == 't' ? -(cur.h / 2) : cur.h / 2;
+                if (oy == 'b') cur.y += y == 'm' ? -(cur.h / 2) : -cur.h;
             }
 
             cur.o = x + y;

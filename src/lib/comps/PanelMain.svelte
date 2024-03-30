@@ -11,7 +11,10 @@
     export let saveUrl;
 
     function addLayer(layer) {
-        $config.layers.push(layer);
+        $config.layers.push({
+            $id: Math.floor(Math.random() * 1000),
+            ...layer
+        });
         $config.layers = $config.layers;
         $current = $config.layers.length - 1;
     }
@@ -19,7 +22,6 @@
     const add = {
         txt() {
             addLayer({
-                $id: Math.floor(Math.random() * 1000),
                 type: 'txt',
                 data: 'lorem ipsum',
                 x: 0,
@@ -32,7 +34,6 @@
         },
         img() {
             addLayer({
-                $id: Math.floor(Math.random() * 1000),
                 type: 'img',
                 data: 'https://placehold.co/100',
                 x: 50,
@@ -46,7 +47,6 @@
         },
         shp() {
             addLayer({
-                $id: Math.floor(Math.random() * 1000),
                 type: 'shp',
                 data: 'rect',
                 x: 50,
