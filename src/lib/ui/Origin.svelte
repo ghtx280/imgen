@@ -1,18 +1,22 @@
 <script>
     import { config, current } from '$lib/store.js';
 
+    export let ignore;
+
     function processOrigin(x, y) {
         return () => {
             const cur = $config.layers[$current];
             const [ox, oy] = cur.o || 'st';
 
-            if (x !== ox) {
+            console.log(cur.x);
+
+            if (!ignore && x !== ox) {
                 if (ox == 's') cur.x += x == 'c' ? cur.w / 2 : cur.w;
                 if (ox == 'c') cur.x += x == 's' ? -(cur.w / 2) : cur.w / 2;
                 if (ox == 'e') cur.x += x == 'c' ? -(cur.w / 2) : -cur.w;
             }
 
-            if (y !== oy) {
+            if (!ignore && y !== oy) {
                 if (oy == 't') cur.y += y == 'm' ? cur.h / 2 : cur.h;
                 if (oy == 'm') cur.y += y == 't' ? -(cur.h / 2) : cur.h / 2;
                 if (oy == 'b') cur.y += y == 'm' ? -(cur.h / 2) : -cur.h;

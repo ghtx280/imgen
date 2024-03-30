@@ -49,7 +49,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
         0,
         0,
         toNum(p.max) || cw - x,
-        toNum(p.lh) || 50,
+        p.lh ? size * (p.lh / 10) : size * 15,
         ox,
         oy
     );

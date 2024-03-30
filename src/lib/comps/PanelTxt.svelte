@@ -44,8 +44,10 @@
             {/each}
         </select>
     </div>
+
+    <Input label="lh" bind:value={$config.layers[$current].lh} min={1} max={100} />
 </div>
 
 <hr />
 
-<Origin />
+<Origin ignore={true} />
