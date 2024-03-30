@@ -1,5 +1,6 @@
 <script>
     import { config, current } from '$lib/store';
+    import Color from '$lib/ui/Color.svelte';
     import Input from '$lib/ui/Input.svelte';
     import Move from '$lib/ui/Move.svelte';
     import Origin from '$lib/ui/Origin.svelte';
@@ -17,7 +18,7 @@
 
 <div flex="10 ai-c" class="mt-10">
     <Input label="s" bind:value={$config.layers[$current].s} min={0} />
-    <Input label="r" bind:value={$config.layers[$current].r} min={0} max={360} />
+    <Input label="r" bind:value={$config.layers[$current].r} min={-360} max={360} />
 </div>
 
 <hr />
@@ -32,7 +33,9 @@
 <hr />
 
 <div flex="20 ai-c" class="mt-20">
-    <input type="color" bind:value={$config.layers[$current].c} />
+    <!-- <span>Stroke Width</span> -->
+    <Color bind:value={$config.layers[$current].c} showHex={false} />
+
     <div flex="start center 10">
         <span text="16 mono">weight</span>
         <select on:change={(e) => ($config.layers[$current].w = e.target.value)}>
@@ -42,5 +45,7 @@
         </select>
     </div>
 </div>
+
+<hr />
 
 <Origin />

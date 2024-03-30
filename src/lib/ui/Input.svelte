@@ -29,14 +29,14 @@
     }
 </script>
 
-<div flex="5 ai-c">
+<div flex="5 ai-c" class="b-1 bc-gray h-35">
     {#if label}
-        <span use:slide class="cursor-ew-resize select-none min-w-16" text="500 up mono 18">
+        <span use:slide class="cursor-ew-resize select-none min-w-16 p-10 w-30" text="500 up mono 16 bold">
             {label}
         </span>
     {/if}
     <input
-        class="w-100"
+        class="w-60"
         type="number"
         bind:value
         on:click={(e) => {
@@ -44,3 +44,10 @@
             e.target?.select();
         }} />
 </div>
+
+<style>
+    input {
+        background: none;
+        border: 0;
+    }
+</style>

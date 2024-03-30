@@ -1,22 +1,28 @@
 <script>
     import { hex } from '$lib/helpers';
 
-    export let value;
+    export let value,
+        showHex = true;
+
+    let id = Math.floor(Math.random() * 1000);
 </script>
 
 <div flex="10 ai-c">
-    <input type="color" bind:value />
-    <p>
-        {hex(value || '')}
-    </p>
+    <label for="clr-{id}" class="b-1 sq-35" style:background={value}></label>
+    <input id="clr-{id}" type="color" bind:value class="op-0 ml--45" />
+    {#if showHex}
+        <p>
+            {hex(value || '')}
+        </p>
+    {/if}
 </div>
 
 <style>
     input[type='color'] {
-        width: 30px;
-        height: 30px;
+        width: 0 !important;
+        height: 0 !important;
         border: 0;
         padding: 0;
-        margin: 0;
+        /* margin: 0; */
     }
 </style>

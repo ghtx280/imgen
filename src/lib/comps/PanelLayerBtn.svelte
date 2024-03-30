@@ -33,7 +33,7 @@
     }
 </script>
 
-<div class="r-5 b-1 over-hidden bg-#333 time-300" flex="space" bind:this={btn}>
+<div class="b-1 over-hidden h-50 time-300" flex="space" bind:this={btn}>
     <div class="w-fit" flex="col">
         <button class="px-5 h:bg-#222" on:click={moveLayer('up')}>
             {@html icon.chevronUp(16)}
@@ -55,7 +55,7 @@
     </button>
 
     <button
-        class="p-10 bg-$red c-f"
+        class="p-10 bg-$red c-f h-full"
         on:click={(ev) => {
             $config.layers = $config.layers.filter((e, i) => i != index);
             $current = null;

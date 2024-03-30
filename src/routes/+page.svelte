@@ -139,7 +139,7 @@
 
 <Tip />
 
-<div class="h-screen flex bg-#222 *:c-#eee">
+<div class="h-screen flex bg-#111 *:c-#eee">
     <div id="сanvas_panel" class="w-full" flex="col center">
         <canvas bind:this={canvas}></canvas>
 
@@ -148,9 +148,9 @@
         </p>
     </div>
 
-    <div class="h-full w-10 cursor-ew-resize" use:resizer={400}></div>
+    <div class="h-full w-10 cursor-ew-resize" use:resizer={600}></div>
 
-    <div id="tools_panel" class="bl-1 shrink-0 p-30" style="width: 400px;">
+    <div id="tools_panel" class="bl-1 shrink-0 p-30" style="width: 600px;">
         <div class="mb-20" flex="space">
             <div flex="10">
                 <button
@@ -161,12 +161,14 @@
                     {@html icon.arrowLeft(20)} Back
                 </button>
 
-                <button class="btn" flex="10 ai-c" class:invisible={$current == null} on:click={copyLayer}>
-                    {@html icon.copy(20)}
+                <button class="btn" flex="10 ai-c center" class:invisible={$current == null} on:click={copyLayer}>
+                    {@html icon.copy(17)}
                 </button>
             </div>
 
-            <button class="btn bg-$green-3 {!saved ? 'outline-3+solid+$red' : ''}" on:click={saveUrl}>Save</button>
+            <button class="btn bg-$green-3 p-5+15 b-0 {!saved ? 'outline-2+solid+$red' : ''}" on:click={saveUrl}>
+                Save
+            </button>
         </div>
 
         <hr />

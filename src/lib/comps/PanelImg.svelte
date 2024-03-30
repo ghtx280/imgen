@@ -45,7 +45,7 @@
 </div>
 
 <div flex="10 ai-c" class="mt-10">
-    <Input label="⟳" bind:value={$config.layers[$current].r} min={0} max={360} />
+    <Input label="⟳" bind:value={$config.layers[$current].r} min={-360} max={360} />
     <Input label="r" bind:value={$config.layers[$current].rd} min={0} />
 </div>
 
@@ -54,8 +54,8 @@
 <div class="">
     <span>Image</span>
     <div flex="10 ai-c" class="mt-10">
-        <input type="text" class="px-20 h-40 r-5 b-1 w-full" bind:value={imgName} />
-        <button class="px-20 h-40 r-5 b-1" on:click={setImg}>set</button>
+        <input type="text" class="px-20 h-40 b-1 w-full" bind:value={imgName} />
+        <button class="px-20 h-40 b-1 c-0 bg-f fs-16" on:click={setImg}>set</button>
     </div>
 </div>
 

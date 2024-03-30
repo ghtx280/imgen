@@ -6,13 +6,19 @@
     import Input from '$lib/ui/Input.svelte';
     import icon from '$lib/icon.js';
     import { parseLayer } from '$lib/parseConfig';
+    import Color from '$lib/ui/Color.svelte';
 
     export let saveUrl;
 
+    function addLayer(layer) {
+        $config.layers.push(layer);
+        $config.layers = $config.layers;
+        $current = $config.layers.length - 1;
+    }
+
     const add = {
         txt() {
-            // console.log($config.layers[$current]);
-            $config.layers.push({
+            addLayer({
                 $id: Math.floor(Math.random() * 1000),
                 type: 'txt',
                 data: 'lorem ipsum',
@@ -23,11 +29,9 @@
                 r: 0,
                 o: 'st'
             });
-
-            $config.layers = $config.layers;
         },
         img() {
-            $config.layers.push({
+            addLayer({
                 $id: Math.floor(Math.random() * 1000),
                 type: 'img',
                 data: 'https://placehold.co/100',
@@ -39,11 +43,9 @@
                 rd: 0,
                 o: 'cm'
             });
-
-            $config.layers = $config.layers;
         },
         shp() {
-            $config.layers.push({
+            addLayer({
                 $id: Math.floor(Math.random() * 1000),
                 type: 'shp',
                 data: 'rect',
@@ -56,8 +58,6 @@
                 rd: 0,
                 o: 'st'
             });
-
-            $config.layers = $config.layers;
         },
         raw() {
             const code = prompt('Enter layer code');
@@ -66,19 +66,23 @@
                 const layer = parseLayer(code);
 
                 if (layer) {
-                    $config.layers.push(layer);
-
-                    $config.layers = $config.layers;
+                    addLayer(layer);
+                } else {
+                    alert('Invalid layer code');
                 }
             }
         }
     };
 </script>
 
-<div flex="20" class="mt-10">
-    <input type="color" bind:value={$config.fill} />
-    <Input label="w" bind:value={$config.width} />
-    <Input label="h" bind:value={$config.height} />
+<div>
+    <span>Canvas</span>
+    <div flex="20 ai-c" class="mt-20">
+        <Input label="w" bind:value={$config.width} />
+        <Input label="h" bind:value={$config.height} />
+        <Color bind:value={$config.fill} />
+    </div>
+    <div flex="20 ai-c" class="mt-10"></div>
 </div>
 
 <hr />

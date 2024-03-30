@@ -6,6 +6,34 @@
 	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+	<!-- Primary Meta Tags -->
+	<title>IMGENX - Image generator by URL</title>
+	<meta name="title" content="IMGENX - Image generator by URL" />
+	<meta name="description"
+		content="A powerful tool for generating images fully built on the basis of a special URL pattern" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://imgenx.vercel.app/" />
+	<meta property="og:title" content="IMGENX - Image generator by URL" />
+	<meta property="og:description"
+		content="A powerful tool for generating images fully built on the basis of a special URL pattern" />
+	<meta property="og:image" content="%sveltekit.assets%/banner.png" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://imgenx.vercel.app/" />
+	<meta property="twitter:title" content="IMGENX - Image generator by URL" />
+	<meta property="twitter:description"
+		content="A powerful tool for generating images fully built on the basis of a special URL pattern" />
+	<meta property="twitter:image" content="%sveltekit.assets%/banner.png" />
+
+	<meta name="author" content="ghtx280">
+	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="https://imgenx.vercel.app/" />
+	<meta http-equiv="content-language" content="en" />
+	<meta name="copyright" content="Copyright © 2024 IMGENX">
+
 
 
 	<!-- ====== analytics ====== -->
@@ -23,17 +51,20 @@
 	<style>
 		input[type="number"]::-webkit-inner-spin-button,
 		input[type="number"]::-webkit-outer-spin-button {
-			display: block;
+			display: none;
 		}
 
 		input,
 		textarea,
-		select {
+		select,
+		.btn {
 			/* margin: 5px; */
 			border-width: 1px;
-			border-radius: 5px;
+			border-color: #888;
 			padding: 5px;
-			background: #333;
+			min-width: 35px;
+			min-height: 35px;
+			background: none;
 		}
 
 		input[type="color"] {
@@ -43,24 +74,22 @@
 
 		button {
 			cursor: pointer;
-			background: #333;
-		}
-
-		.btn {
-			padding: 10px;
-			border-radius: 5px;
-			border-width: 1px;
-			background: #333;
-
+			background: none;
 		}
 
 		* {
-			border-color: #555 !important;
+			border-color: #333 !important;
+		}
+
+		option {
+			color: #fff !important;
+			background: #111 !important;
 		}
 	</style>
 
 
-	<script src="https://unpkg.com/blickcss@2.1.11"></script>
+	<!-- BLICKCSS -->
+	<script src="https://unpkg.com/blickcss@2.1.12"></script>
 </head>
 
 <body data-sveltekit-preload-data="hover">

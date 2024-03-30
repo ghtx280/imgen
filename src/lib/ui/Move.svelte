@@ -22,6 +22,6 @@
     }
 </script>
 
-<button class="rel sq-30 r-5 b-1" flex="center" use:moving>
-    {@html icon.move(20, '#eee', 1.5)}
+<button class="rel sq-35 b-1" flex="center" use:moving>
+    {@html icon.move(21, '#eee', 1.5)}
 </button>
