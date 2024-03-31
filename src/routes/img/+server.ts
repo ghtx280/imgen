@@ -35,7 +35,7 @@ if (!once) {
         console.log( file );
         
 
-        console.log(relative( __dirname, join(__dirname, file)), name);
+        console.log(join(process.cwd(), file), name);
         
         // let ddd = await read(file).arrayBuffer()
         
