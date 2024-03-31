@@ -8,7 +8,7 @@ const caclOrigin = w => ({
 })
 
 
-export default function(ctx, text, x, y, maxWidth, lineHeight, ox, oy) {
+export default function(ctx, text, x, y, maxWidth, lineHeight, ox, oy, p) {
     // First, start by splitting all of our text into words, but splitting it into an array split by spaces
     let words = text.split(' ');
     let space = true

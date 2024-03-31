@@ -24,12 +24,12 @@ export function parseOrigin(o: Origin): [OriginX, OriginY] {
 
 export function CreateStroke(ctx: Ctx, p: LayerBase & LayerShp, x: number, y: number) {
     if (toNum(p.bw)) {
-        // ctx.save();
+        ctx.save();
         ctx.beginPath();
         ctx.strokeStyle = hex(p.bc || "#000000");
         ctx.lineWidth = toNum(p.bw) || 0
         ctx.roundRect(x, y, p.w || 0, p.h || 0, toNum(p.rd) || 0)
         ctx.stroke()
-        // ctx.restore();
+        ctx.restore();
     }
 }

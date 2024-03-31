@@ -50,4 +50,14 @@
 
 <hr />
 
+<div class="">
+    <span>Stroke</span>
+    <div flex="10 ai-c" class="mt-10">
+        <Input label="w" bind:value={$config.layers[$current].bw} min={0} />
+        <Color bind:value={$config.layers[$current].bc} />
+    </div>
+</div>
+
+<hr />
+
 <Origin ignore={true} />

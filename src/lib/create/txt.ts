@@ -37,11 +37,22 @@ export default async function(this: ItemThis, p: LayerTxt) {
     this.ctx.translate(x, y);
     this.ctx.rotate(Math.PI / (180 / rotate));
 
-    this.ctx.fillStyle = hex(color);
-    this.ctx.font = `${p.w || 500} ${size}px ${font}`;
-    // console.log(this.ctx.font);
-    this.ctx.textAlign = origin[ox] as CanvasTextAlign;
-    this.ctx.textBaseline = origin[oy] as CanvasTextBaseline;
+    // this.ctx.fillStyle = hex(color);
+    // this.ctx.font = `${p.w || 500} ${size}px ${font}`;
+    // // console.log(this.ctx.font);
+    // this.ctx.textAlign = origin[ox] as CanvasTextAlign;
+    // this.ctx.textBaseline = origin[oy] as CanvasTextBaseline;
+
+    const setStyles = () => {
+        this.ctx.fillStyle = hex(color);
+        this.ctx.font = `${p.w || 500} ${size}px ${font}`;
+        this.ctx.textAlign = origin[ox] as CanvasTextAlign;
+        this.ctx.textBaseline = origin[oy] as CanvasTextBaseline;
+    }
+
+    setStyles()
+
+    
 
     let wrappedText = wrapText(
         this.ctx,
@@ -51,10 +62,26 @@ export default async function(this: ItemThis, p: LayerTxt) {
         toNum(p.max) || cw - x,
         p.lh ? size * (p.lh / 10) : size * 15,
         ox,
-        oy
+        oy,
+        p
     );
 
-    wrappedText.forEach((i) => this.ctx.fillText(i[0], i[1], i[2]));
+    wrappedText.forEach((i) => {
+        // stroke text
+        if (toNum(p.bw)) {
+            setStyles()
+            this.ctx.strokeStyle = hex(p.bc || "#000000");
+            this.ctx.lineWidth = toNum(p.bw) || 0 
+            this.ctx.strokeText(i[0], i[1], i[2])
+        }
+
+        // fill text
+        setStyles()
+        this.ctx.fillText(i[0], i[1], i[2])
+        
+        // this.ctx.
+        
+    });
 
     this.ctx.restore();
 }
