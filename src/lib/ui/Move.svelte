@@ -5,8 +5,8 @@
     function moving(node) {
         let pressed = false;
 
-        function move(value, movement) {
-            return +value + movement / 2;
+        function move(value, movement, ev) {
+            return +value + Math.round(ev.shiftKey ? movement * 2 : ev.ctrlKey ? movement / 5 : movement / 2);
         }
 
         node.addEventListener('mousedown', () => (pressed = true));
@@ -15,8 +15,8 @@
 
         addEventListener('mousemove', (event) => {
             if (pressed) {
-                $config.layers[$current].x = move($config.layers[$current].x, event.movementX);
-                $config.layers[$current].y = move($config.layers[$current].y, event.movementY);
+                $config.layers[$current].x = move($config.layers[$current].x, event.movementX, event);
+                $config.layers[$current].y = move($config.layers[$current].y, event.movementY, event);
             }
         });
     }

@@ -5,8 +5,8 @@
     function scaling(node) {
         let pressed = false;
 
-        function scale(value, movement) {
-            return +value + Math.round(movement / 2);
+        function scale(value, movement, ev) {
+            return +value + Math.round(ev.shiftKey ? movement * 2 : ev.ctrlKey ? movement / 5 : movement / 2);
         }
 
         node.addEventListener('mousedown', () => (pressed = true));
@@ -20,7 +20,7 @@
                 let ow = obj.w;
                 let oh = obj.h;
 
-                $config.layers[$current].w = Math.round(scale(obj.w, event.movementY));
+                $config.layers[$current].w = Math.round(scale(obj.w, event.movementY, event));
                 $config.layers[$current].h = ($config.layers[$current].w * oh) / ow;
 
                 $config.layers[$current].w = $config.layers[$current].w?.toFixed?.(1);

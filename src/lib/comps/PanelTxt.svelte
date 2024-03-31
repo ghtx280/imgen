@@ -24,6 +24,10 @@
     <Input label="r" bind:value={$config.layers[$current].r} min={-360} max={360} />
 </div>
 
+<div flex="10 ai-c" class="mt-10">
+    <Input label="lh" bind:value={$config.layers[$current].lh} min={1} max={500} />
+    <Input label="mw" bind:value={$config.layers[$current].max} min={0} max={2000} />
+</div>
 <hr />
 
 <div class="">
@@ -68,8 +72,6 @@
             {/each}
         </select>
     </div>
-
-    <Input label="lh" bind:value={$config.layers[$current].lh} min={1} max={100} />
 </div>
 
 <hr />
