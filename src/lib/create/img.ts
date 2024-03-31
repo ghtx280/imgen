@@ -35,12 +35,16 @@ export default async function(this: ItemThis, p: LayerShp) {
     region.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0);
     this.ctx.clip(region, 'evenodd');
 
+
+    // console.log(p.data, "server");
+    
     
     if (typeof p.data == "string") {
         p.data = {
             // @ts-ignore
             $elem: await loadImage(p.data),
-            $name: p.data + "",
+            // @ts-ignore
+            $name: p.data?.$name || p.data,
         };
     }
 

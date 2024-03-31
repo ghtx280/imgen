@@ -84,6 +84,8 @@
     }
 
     async function render(cfg: any) {
+        // console.log('render');
+
         ctx = ctx || canvas?.getContext('2d');
 
         if (canvas && ctx) {

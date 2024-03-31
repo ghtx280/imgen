@@ -7,13 +7,14 @@
     import Origin from '$lib/ui/Origin.svelte';
     import Color from '$lib/ui/Color.svelte';
 
-    $: $config.layers[$current] ||= {};
+    $: $config.layers[$current] ||= '';
 
-    let img = $config.layers[$current].data;
+    let img = $config.layers[$current]?.data || {};
+
     let imgName = img;
     let imgElem = null;
 
-    if (img.$name) {
+    if (img?.$name) {
         imgName = img.$name;
         imgElem = img.$elem;
     }
@@ -21,12 +22,16 @@
     async function setImg() {
         $config.layers[$current].data = {
             $name: imgName,
-            $elem: await loadImage(imgName)
+            $elem: imgElem || (await loadImage(imgName?.$name || imgName))
         };
     }
 
     onMount(() => {
-        setImg();
+        if (typeof img == 'string') {
+            // console.log('setting image');
+            setImg();
+            // console.log($config.layers[$current]);
+        }
     });
 </script>
 

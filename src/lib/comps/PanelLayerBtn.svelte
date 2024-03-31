@@ -36,11 +36,11 @@
 <div class="b-1 over-hidden h-50 time-300" flex="space" bind:this={btn}>
     <div class="w-fit" flex="col">
         <button class="px-5 h:bg-#222" on:click={moveLayer('up')}>
-            {@html icon.chevronUp(16)}
+            {@html icon.chevronUp(16, '#fff', 1)}
         </button>
 
         <button class="px-5 h:bg-#222" on:click={moveLayer('down')}>
-            {@html icon.chevronDown(16)}
+            {@html icon.chevronDown(16, '#fff', 1)}
         </button>
     </div>
 

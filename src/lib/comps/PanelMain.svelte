@@ -92,10 +92,10 @@
     <!-- <span>Add</span> -->
     <div flex="15 ai-c" class="mt-10">
         <span>Add</span>
-        <button class="btn" on:click={add.img}>{@html icon.image(20)}</button>
-        <button class="btn" on:click={add.txt}>T</button>
-        <button class="btn" on:click={add.shp}>{@html icon.square(20)}</button>
-        <button class="btn" on:click={add.raw}>{@html icon.code(20)}</button>
+        <button class="btn" on:click={add.img}>{@html icon.image(20, '#fff', 1)}</button>
+        <button class="btn" on:click={add.txt} text="300">T</button>
+        <button class="btn" on:click={add.shp}>{@html icon.square(20, '#fff', 1)}</button>
+        <button class="btn" on:click={add.raw}>{@html icon.code(20, '#fff', 1)}</button>
     </div>
 </div>
 
