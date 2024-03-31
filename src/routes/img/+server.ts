@@ -21,9 +21,11 @@ const fonts = {
     Emoji: "emoji.ttf",
 }
 
+// "../../../"
+
 if (!once) {
     Object.entries(fonts).map(([name, file]) => {
-        GlobalFonts.registerFromPath(join(__dirname, file), name)
+        GlobalFonts.registerFromPath(join(__dirname, "..", "..", "..", "static", "fonts", file), name)
     })
     once = true
 }
