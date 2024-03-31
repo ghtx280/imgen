@@ -26,7 +26,7 @@ const fonts = {
 if (!once) {
     Object.entries(fonts).map(([name, file]) => {
         GlobalFonts.registerFromPath(join(process.cwd(), "fonts", file), name)
-        // console.log(process.cwd());
+        console.log(process.cwd());
         
     })
     once = true
