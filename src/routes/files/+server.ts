@@ -1,7 +1,7 @@
 import { json, type RequestHandler } from "@sveltejs/kit";
 import { join } from "path"
 import fs from "fs"
-import fonts from "./fonts/emoji.ttf"
+// import fonts from "./fonts/emoji.ttf"
 import { read } from "$app/server";
 
 export const GET: RequestHandler = async (e) => {
