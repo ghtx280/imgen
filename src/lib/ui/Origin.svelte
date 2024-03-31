@@ -24,18 +24,6 @@
             setDirOrigin(x, ox, 'x');
             setDirOrigin(y, oy, 'y');
 
-            // if (!ignore && x !== ox) {
-            //     if (ox == 's') cur.x += x == 'c' ? cur.w / 2 : cur.w;
-            //     if (ox == 'c') cur.x += x == 's' ? -(cur.w / 2) : cur.w / 2;
-            //     if (ox == 'e') cur.x += x == 'c' ? -(cur.w / 2) : -cur.w;
-            // }
-
-            // if (!ignore && y !== oy) {
-            //     if (oy == 't') cur.y += y == 'm' ? cur.h / 2 : cur.h;
-            //     if (oy == 'm') cur.y += y == 't' ? -(cur.h / 2) : cur.h / 2;
-            //     if (oy == 'b') cur.y += y == 'm' ? -(cur.h / 2) : -cur.h;
-            // }
-
             cur.o = x + y;
 
             $config.layers[$current] = $config.layers[$current];

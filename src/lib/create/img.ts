@@ -31,6 +31,9 @@ export default async function(this: ItemThis, p: LayerShp) {
 
     CreateStroke(this.ctx, p, x, y)
 
+    
+    
+
     let region = new Path2D();
     region.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0);
     this.ctx.clip(region, 'evenodd');

@@ -39,7 +39,8 @@ export default async function(this: ItemThis, p: LayerShp) {
         CreateStroke(this.ctx, p, x, y)
 
         this.ctx.fillStyle = hex(p.c || "#000000")
-        this.ctx.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0);
+        this.ctx.beginPath();
+        this.ctx.roundRect(x, y, p.w, p.h, [toNum(p.rd) || 0]);
         this.ctx.fill();
         
     }
