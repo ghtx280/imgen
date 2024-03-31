@@ -12,7 +12,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // import Emoji from './fonts/emoji.ttf';
 
-const fff = import.meta.glob("./fonts/*", {
+const fff = import.meta.glob("/fonts/*", {
     as: "url",
     eager: true
 })
@@ -32,14 +32,14 @@ if (!once) {
     Object.entries(fff).map(async ([name, file]) => {
         name = name.match(/fonts\/(.+)\./)?.[1] || ""
 
-        console.log(join(__dirname, file));
+        console.log( file );
         
 
         console.log(relative( __dirname, join(__dirname, file)), name);
         
         // let ddd = await read(file).arrayBuffer()
         
-        GlobalFonts.registerFromPath(file) 
+        GlobalFonts.registerFromPath(join(process.cwd(), file), name) 
     })
 }
 
