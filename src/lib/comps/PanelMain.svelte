@@ -10,7 +10,7 @@
 
     export let saveUrl;
 
-    function addLayer(layer) {
+    async function addLayer(layer) {
         $config.layers.push({
             $id: Math.floor(Math.random() * 1000),
             ...layer
@@ -20,8 +20,8 @@
     }
 
     const add = {
-        txt() {
-            addLayer({
+        async txt() {
+            await addLayer({
                 type: 'txt',
                 data: 'lorem ipsum',
                 x: 0,
@@ -33,10 +33,13 @@
                 lh: 15
             });
         },
-        img() {
-            addLayer({
+        async img() {
+            await addLayer({
                 type: 'img',
-                data: 'https://placehold.co/100',
+                data: {
+                    $name: 'https://placehold.co/100',
+                    $elem: await loadImage('https://placehold.co/100')
+                },
                 x: 50,
                 y: 50,
                 w: 100,
@@ -46,8 +49,8 @@
                 o: 'cm'
             });
         },
-        shp() {
-            addLayer({
+        async shp() {
+            await addLayer({
                 type: 'shp',
                 data: 'rect',
                 x: 50,
@@ -60,14 +63,14 @@
                 o: 'st'
             });
         },
-        raw() {
+        async raw() {
             const code = prompt('Enter layer code');
 
             if (code) {
                 const layer = parseLayer(code);
 
                 if (layer) {
-                    addLayer(layer);
+                    await addLayer(layer);
                 } else {
                     alert('Invalid layer code');
                 }
