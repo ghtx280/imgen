@@ -5,7 +5,8 @@ import parseConfig from '../../lib/parseConfig.js';
 
 
 import url from "node:url";
-import { join } from "node:path";
+import { join, relative } from "node:path";
+import { read } from '$app/server';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -27,19 +28,31 @@ let once = false;
 // }
 
 
-// if (!once) {
-//     Object.entries(fonts).map(([name, file]) => {
-//         const path = join(process.cwd(), "static/fonts/", file)
-//         GlobalFonts.loadFontsFromDir(fff.)
-//         console.log(path);
+if (!once) {
+    Object.entries(fff).map(async ([name, file]) => {
+        name = name.match(/fonts\/(.+)\./)?.[1] || ""
+
+        console.log(join(__dirname, file));
         
-//     })
-//     once = true
-// }
+
+        console.log(relative( __dirname, join(__dirname, file)), name);
+        
+        // let ddd = await read(file).arrayBuffer()
+        
+        GlobalFonts.registerFromPath(file) 
+    })
+}
+
+
 
 export const GET: RequestHandler = async (e) => {
 
-    console.log(fff);
+    // console.dir();
+
+    if (e.url.searchParams.get("fonts")) {
+        return new Response(GlobalFonts.families.map(e=>e.family).join("\n-------------\n"))
+    }
+    
     
 
 
