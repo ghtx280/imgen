@@ -8,8 +8,8 @@ import url from "node:url";
 import { join } from "node:path";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-// import Emoji from '$lib/fonts/Emoji.ttf';
 
+import Emoji from './fonts/emoji.ttf';
 
 function makeError(error: string) {
     return json({ error }, { status: 400 })
@@ -17,26 +17,24 @@ function makeError(error: string) {
 
 let once = false;
 
+const fonts = {
+    Emoji: "emoji.ttf",
+}
 
 
-
+if (!once) {
+    Object.entries(fonts).map(([name, file]) => {
+        const path = join(process.cwd(), "static/fonts/", file)
+        GlobalFonts.registerFromPath(path, name)
+        console.log(path);
+        
+    })
+    once = true
+}
 
 export const GET: RequestHandler = async (e) => {
 
-    const fonts = {
-        Emoji: "emoji.ttf",
-    }
     
-    // "../../../"
-    
-    if (!once) {
-        Object.entries(fonts).map(([name, file]) => {
-            GlobalFonts.registerFromPath(join(process.cwd(), "fonts", file), name)
-            console.log(process.cwd());
-            
-        })
-        once = true
-    }
 
 
     // @ts-ignore
