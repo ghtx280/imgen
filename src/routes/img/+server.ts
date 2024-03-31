@@ -9,7 +9,7 @@ import { join } from "node:path";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-import Emoji from './fonts/emoji.ttf';
+// import Emoji from './fonts/emoji.ttf';
 
 function makeError(error: string) {
     return json({ error }, { status: 400 })
