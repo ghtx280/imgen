@@ -15,26 +15,30 @@ function makeError(error: string) {
     return json({ error }, { status: 400 })
 }
 
-let once;
+let once = false;
 
-const fonts = {
-    Emoji: "emoji.ttf",
-}
 
-// "../../../"
-
-if (!once) {
-    Object.entries(fonts).map(([name, file]) => {
-        GlobalFonts.registerFromPath(join(process.cwd(), "fonts", file), name)
-        console.log(process.cwd());
-        
-    })
-    once = true
-}
 
 
 
 export const GET: RequestHandler = async (e) => {
+
+    const fonts = {
+        Emoji: "emoji.ttf",
+    }
+    
+    // "../../../"
+    
+    if (!once) {
+        Object.entries(fonts).map(([name, file]) => {
+            GlobalFonts.registerFromPath(join(process.cwd(), "fonts", file), name)
+            console.log(process.cwd());
+            
+        })
+        once = true
+    }
+
+
     // @ts-ignore
     globalThis.Path2D = Path2D
     
