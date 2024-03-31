@@ -25,8 +25,8 @@ const fonts = {
 
 if (!once) {
     Object.entries(fonts).map(([name, file]) => {
-        GlobalFonts.registerFromPath(join(__dirname, "..", "..", "..", ".vercel", "output", "static", "fonts", file), name)
-        console.log(join(__dirname, "..", "..", "..", ".vercel", "output", "static", "fonts", file));
+        GlobalFonts.registerFromPath(join(process.cwd(), "fonts", file), name)
+        // console.log(process.cwd());
         
     })
     once = true
