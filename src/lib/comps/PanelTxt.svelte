@@ -41,9 +41,10 @@
         <select
             on:change={(e) => {
                 $config.layers[$current].f = e.target.value;
+                $config = $config;
                 setTimeout(() => {
                     $config = $config;
-                }, 100);
+                }, 500);
             }}>
             <option selected value={''}>-</option>
             {#each fontNames as name}
