@@ -8,19 +8,33 @@
             const cur = $config.layers[$current];
             const [ox, oy] = cur.o || 'st';
 
-            console.log(cur.x);
+            // console.log(cur.x);
 
-            if (!ignore && x !== ox) {
-                if (ox == 's') cur.x += x == 'c' ? cur.w / 2 : cur.w;
-                if (ox == 'c') cur.x += x == 's' ? -(cur.w / 2) : cur.w / 2;
-                if (ox == 'e') cur.x += x == 'c' ? -(cur.w / 2) : -cur.w;
-            }
+            const setDirOrigin = (d, o, n) => {
+                let s = n == 'x' ? cur.w : cur.h;
+                let p = n == 'x' ? 'sce' : 'tmb';
 
-            if (!ignore && y !== oy) {
-                if (oy == 't') cur.y += y == 'm' ? cur.h / 2 : cur.h;
-                if (oy == 'm') cur.y += y == 't' ? -(cur.h / 2) : cur.h / 2;
-                if (oy == 'b') cur.y += y == 'm' ? -(cur.h / 2) : -cur.h;
-            }
+                if (!ignore && d !== o) {
+                    if (o == p[0]) cur[n] += d == p[1] ? s / 2 : s;
+                    if (o == p[1]) cur[n] += d == p[0] ? -(s / 2) : s / 2;
+                    if (o == p[2]) cur[n] += d == p[1] ? -(s / 2) : -s;
+                }
+            };
+
+            setDirOrigin(x, ox, 'x');
+            setDirOrigin(y, oy, 'y');
+
+            // if (!ignore && x !== ox) {
+            //     if (ox == 's') cur.x += x == 'c' ? cur.w / 2 : cur.w;
+            //     if (ox == 'c') cur.x += x == 's' ? -(cur.w / 2) : cur.w / 2;
+            //     if (ox == 'e') cur.x += x == 'c' ? -(cur.w / 2) : -cur.w;
+            // }
+
+            // if (!ignore && y !== oy) {
+            //     if (oy == 't') cur.y += y == 'm' ? cur.h / 2 : cur.h;
+            //     if (oy == 'm') cur.y += y == 't' ? -(cur.h / 2) : cur.h / 2;
+            //     if (oy == 'b') cur.y += y == 'm' ? -(cur.h / 2) : -cur.h;
+            // }
 
             cur.o = x + y;
 
