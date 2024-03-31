@@ -11,29 +11,35 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // import Emoji from './fonts/emoji.ttf';
 
+const fff = import.meta.glob("./fonts/*", {
+    as: "url",
+    eager: true
+})
+
 function makeError(error: string) {
     return json({ error }, { status: 400 })
 }
 
 let once = false;
 
-const fonts = {
-    Emoji: "emoji.ttf",
-}
+// const fonts = {
+//     Emoji: "emoji.ttf",
+// }
 
 
-if (!once) {
-    Object.entries(fonts).map(([name, file]) => {
-        const path = join(process.cwd(), "static/fonts/", file)
-        GlobalFonts.registerFromPath(path, name)
-        console.log(path);
+// if (!once) {
+//     Object.entries(fonts).map(([name, file]) => {
+//         const path = join(process.cwd(), "static/fonts/", file)
+//         GlobalFonts.loadFontsFromDir(fff.)
+//         console.log(path);
         
-    })
-    once = true
-}
+//     })
+//     once = true
+// }
 
 export const GET: RequestHandler = async (e) => {
 
+    console.log(fff);
     
 
 
