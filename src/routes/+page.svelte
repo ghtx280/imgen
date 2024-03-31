@@ -152,7 +152,7 @@
 
     <div class="h-full w-10 cursor-ew-resize" use:resizer={600}></div>
 
-    <div id="tools_panel" class="bl-1 shrink-0 p-30" style="width: 600px;">
+    <div id="tools_panel" class="bl-1 shrink-0 p-30 over-y-auto h-full rel z-999" style="width: 600px;">
         <div class="mb-20" flex="space">
             <div flex="10">
                 <button

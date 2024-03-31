@@ -3,16 +3,15 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import { generateImage } from '../../lib/generate.js';
 import parseConfig from '../../lib/parseConfig.js';
 
-
+// @ts-ignore
 import url from "node:url";
-import { join, relative } from "node:path";
+// @ts-ignore
+import { join } from "node:path";
 import { read } from '$app/server';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-// import Emoji from './fonts/emoji.ttf';
-
-const fff = import.meta.glob("/fonts/*", {
+const fonts = import.meta.glob("/static/fonts/**/*.ttf", {
     as: "url",
     eager: true
 })
@@ -23,39 +22,25 @@ function makeError(error: string) {
 
 let once = false;
 
-// const fonts = {
-//     Emoji: "emoji.ttf",
-// }
-
-
 if (!once) {
-    Object.entries(fff).map(async ([name, file]) => {
-        name = name.match(/fonts\/(.+)\./)?.[1] || ""
-
-        console.log( file );
-        
-
-        console.log(join(process.cwd(), file), name);
-        
-        // let ddd = await read(file).arrayBuffer()
-        
-        GlobalFonts.registerFromPath(join(process.cwd(), file), name) 
+    Object.values(fonts).map(file => {
+        GlobalFonts.registerFromPath(join(process.cwd(), file))
     })
+    once = true;
 }
 
 
 
 export const GET: RequestHandler = async (e) => {
 
-    // console.dir();
+    // console.log(GlobalFonts.families.filter(e => e.family.startsWith("Mont"))[0].styles);
+    
 
-    if (e.url.searchParams.get("fonts")) {
-        return new Response(GlobalFonts.families.map(e=>e.family).join("\n-------------\n"))
+    if (e.url.searchParams.get("fonts") !== null) {
+        return json(fonts)
     }
     
     
-
-
     // @ts-ignore
     globalThis.Path2D = Path2D
     

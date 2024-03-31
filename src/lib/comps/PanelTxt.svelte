@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores';
     import { config, current } from '$lib/store';
     import Color from '$lib/ui/Color.svelte';
     import Input from '$lib/ui/Input.svelte';
@@ -7,6 +8,8 @@
     import TextArea from '$lib/ui/TextArea.svelte';
 
     $: $config.layers[$current] ||= {};
+
+    const fontNames = $page.data.fontNames;
 </script>
 
 <div flex="10 ai-c" class="mt-20">
@@ -27,6 +30,26 @@
     <span>Text</span>
     <div class="mt-10">
         <TextArea bind:value={$config.layers[$current].data} />
+    </div>
+</div>
+
+<hr />
+
+<div class="">
+    <span>Font</span>
+    <div class="mt-10">
+        <select
+            on:change={(e) => {
+                $config.layers[$current].f = e.target.value;
+                setTimeout(() => {
+                    $config = $config;
+                }, 100);
+            }}>
+            <option selected value={''}>-</option>
+            {#each fontNames as name}
+                <option value={name}>{name}</option>
+            {/each}
+        </select>
     </div>
 </div>
 
