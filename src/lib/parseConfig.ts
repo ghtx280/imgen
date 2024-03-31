@@ -2,6 +2,8 @@ import { hex } from "./helpers.js";
 
 
 export function parseLayer(l: string) {
+    console.log(l);
+    
     let [_, type, data, params]: any[] = l.match(/(\w+):([^;]+)(?:;(.+))?/) || ["", "", "", ""]
 
     params = params?.split(',')

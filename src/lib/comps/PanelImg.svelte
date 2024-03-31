@@ -15,9 +15,11 @@
     let imgElem = img.$elem;
 
     async function setImg() {
+        const dec = decodeURIComponent(imgName);
+
         $config.layers[$current].data = {
-            $name: imgName,
-            $elem: await loadImage(imgName)
+            $name: dec,
+            $elem: await loadImage(dec)
         };
     }
 </script>

@@ -43,11 +43,12 @@ export default async function(this: ItemThis, p: LayerShp) {
     
     
     if (typeof p.data == "string") {
+        const dec = decodeURIComponent(p.data);
         p.data = {
             // @ts-ignore
-            $elem: await loadImage(p.data),
+            $elem: await loadImage(dec),
             // @ts-ignore
-            $name: p.data?.$name || p.data,
+            $name: dec,
         };
     }
 

@@ -30,7 +30,7 @@
                 return (
                     e.type +
                     ':' +
-                    (e.data?.$name || e.data) +
+                    encodeURIComponent(e.data?.$name || e.data) +
                     ';' +
                     Object.entries(e)
                         .map(([k, v]) => {
