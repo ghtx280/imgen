@@ -42,10 +42,10 @@
             on:change={(e) => {
                 $config.layers[$current].f = e.target.value;
                 $config = $config;
-                setTimeout(() => {
-                    $config = $config;
-                }, 500);
-            }}>
+                setTimeout(() => ($config = $config), 100);
+                setTimeout(() => ($config = $config), 500);
+            }}
+            bind:value={$config.layers[$current].f}>
             <option selected value={''}>-</option>
             {#each fontNames as name}
                 <option value={name}>{name}</option>

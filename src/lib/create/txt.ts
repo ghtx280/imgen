@@ -20,7 +20,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
 
     let rotate = toNum(p.r) || 0;
     let color = p.c || 'black';
-    let font = p.f || 'sans-serif';
+    let font = p.f || 'Inter, sans-serif';
     let size = p.s || 16;
 
     let data = p.data || 'lorem';
