@@ -172,8 +172,10 @@
         } catch (error) {}
 
         addEventListener('keydown', (ev) => {
-            ev.preventDefault();
-            if (ev.ctrlKey && ev.key == 'c') copyLink();
+            if (ev.ctrlKey && ev.key == 'c') {
+                ev.preventDefault();
+                copyLink();
+            }
         });
     });
 </script>
