@@ -46,7 +46,6 @@ export function drag(node: HTMLElement, callback: DragCallback) {
         return +value + Math.round(ev.shiftKey ? movement * 2 : ev.ctrlKey ? movement / 5 : movement / 2);
     }
     
-
     let pressed = false;
     let previousTouch: any = null;
 

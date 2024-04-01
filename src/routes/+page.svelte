@@ -143,8 +143,8 @@
             yyy += (ev?.movementY || 0) / canvasScale;
         } else {
             const layer = $config.layers[$current];
-            layer.x = speed(layer.x, ev.movementX * 2, ev);
-            layer.y = speed(layer.y, ev.movementY * 2, ev);
+            layer.x = speed(layer.x, (ev.movementX * 2) / canvasScale, ev);
+            layer.y = speed(layer.y, (ev.movementY * 2) / canvasScale, ev);
             $config = $config;
         }
     };
