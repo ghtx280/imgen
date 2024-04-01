@@ -7,7 +7,7 @@
 </script>
 
 {#if !tip}
-    <div class="fullscreen bg-black/60" flex="center">
+    <div class="fullscreen bg-black/60 z-999" flex="center">
         <div class="bg-f p-40 r-20 b-1 max-w-600" flex="20 col center">
             <h4>IMGENX</h4>
             <p text="center">A powerful tool for creating dynamic images based on URLs</p>

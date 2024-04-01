@@ -1,4 +1,7 @@
 <script lang="ts">
+    import type { DragCallback } from '$lib/helpers';
+    import { drag } from '$lib/helpers';
+
     export let value: string | undefined | number = '',
         label: string = '',
         def: string = '0',
@@ -7,31 +10,23 @@
 
     value ||= def;
 
-    function slide(node: HTMLSpanElement) {
-        let pressed = false;
-
-        addEventListener('mousemove', (e) => {
-            if (pressed && value !== undefined) {
-                value =
-                    +value + Math.round(e.shiftKey ? e.movementX * 2 : e.ctrlKey ? e.movementX / 5 : e.movementX / 2);
-                if (min !== null && value < min) {
-                    value = min;
-                }
-
-                if (max !== null && value > max) {
-                    value = max;
-                }
+    const slide: DragCallback = (event, speed) => {
+        if (value !== undefined) {
+            value = speed(value, event.movementX, event);
+            if (min !== null && value < min) {
+                value = min;
             }
-        });
 
-        node.addEventListener('mousedown', () => (pressed = true));
-        addEventListener('mouseup', () => (pressed = false));
-    }
+            if (max !== null && value > max) {
+                value = max;
+            }
+        }
+    };
 </script>
 
 <div flex="5 ai-c" class="b-1 bc-gray h-35">
     {#if label}
-        <span use:slide class="cursor-ew-resize select-none min-w-16 p-10 w-30" text="500 up mono 16 bold">
+        <span use:drag={slide} class="cursor-ew-resize select-none min-w-16 p-10 w-30" text="500 up mono 16 bold">
             {label}
         </span>
     {/if}

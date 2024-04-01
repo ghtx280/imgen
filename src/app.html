@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.75" />
 
 	<!-- Primary Meta Tags -->
 	<title>IMGENX - Image generator by URL</title>
@@ -93,9 +93,11 @@
 
 	<!-- BLICKCSS -->
 	<script src="https://unpkg.com/blickcss@2.1.12"></script>
+	<script src="https://unpkg.com/rem-mode-blickcss"></script>
+	<script>RemMode()(blick)</script>
 </head>
 
-<body data-sveltekit-preload-data="hover">
+<body data-sveltekit-preload-data="hover" class="bg-#111">
 	<div style="display: contents">%sveltekit.body%</div>
 </body>
 

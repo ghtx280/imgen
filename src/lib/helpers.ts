@@ -33,3 +33,44 @@ export function CreateStroke(ctx: Ctx, p: LayerBase & LayerShp, x: number, y: nu
         ctx.restore();
     }
 }
+
+
+type DragEvent = Partial<MouseEvent & TouchEvent>
+
+type SpeedFunc = (value: string | number, movement: any, ev: DragEvent) => number
+
+export type DragCallback = (event: DragEvent, speed: SpeedFunc) => void
+
+export function drag(node: HTMLElement, callback: DragCallback) {
+    function speed(value: string | number, movement: any, ev: DragEvent) {
+        return +value + Math.round(ev.shiftKey ? movement * 2 : ev.ctrlKey ? movement / 5 : movement / 2);
+    }
+    
+
+    let pressed = false;
+    let previousTouch: any = null;
+
+    function ffff(event: DragEvent) {
+        event.preventDefault?.();
+        if (pressed) callback(event, speed);
+    }
+
+    node.addEventListener('mousedown', () => (pressed = true));
+    addEventListener('mouseup', () => (pressed = false));
+    node.addEventListener('touchstart', () => (pressed = true));
+    addEventListener('touchend', () => (pressed = false));
+    addEventListener('mousemove', ffff as (ev: MouseEvent) => any);
+    addEventListener('touchend', (e) => (previousTouch = null));
+    node.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        if (previousTouch) {
+            ffff({
+                ...e,
+                movementX: touch.pageX - previousTouch.pageX,
+                movementY: touch.pageY - previousTouch.pageY,
+            });
+        }
+        previousTouch = touch;
+    });
+}

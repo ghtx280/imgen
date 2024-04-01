@@ -1,35 +1,22 @@
 <script>
+    import { drag } from '$lib/helpers';
     import icon from '$lib/icon.js';
     import { config, current } from '$lib/store.js';
 
-    function scaling(node) {
-        let pressed = false;
+    function scaling(event, speed) {
+        let obj = $config.layers[$current];
+        // let ratio = obj.w / obj.h;
+        let ow = obj.w;
+        let oh = obj.h;
 
-        function scale(value, movement, ev) {
-            return +value + Math.round(ev.shiftKey ? movement * 2 : ev.ctrlKey ? movement / 5 : movement / 2);
-        }
+        $config.layers[$current].w = Math.round(speed(obj.w, event.movementY, event));
+        $config.layers[$current].h = ($config.layers[$current].w * oh) / ow;
 
-        node.addEventListener('mousedown', () => (pressed = true));
-
-        addEventListener('mouseup', () => (pressed = false));
-
-        addEventListener('mousemove', (event) => {
-            if (pressed) {
-                let obj = $config.layers[$current];
-                let ratio = obj.w / obj.h;
-                let ow = obj.w;
-                let oh = obj.h;
-
-                $config.layers[$current].w = Math.round(scale(obj.w, event.movementY, event));
-                $config.layers[$current].h = ($config.layers[$current].w * oh) / ow;
-
-                $config.layers[$current].w = $config.layers[$current].w?.toFixed?.(1);
-                $config.layers[$current].h = $config.layers[$current].h?.toFixed?.(1);
-            }
-        });
+        $config.layers[$current].w = $config.layers[$current].w?.toFixed?.(1);
+        $config.layers[$current].h = $config.layers[$current].h?.toFixed?.(1);
     }
 </script>
 
-<button class="rel sq-35 b-1" flex="center" use:scaling>
+<button class="rel sq-35 b-1" flex="center" use:drag={scaling}>
     {@html icon.maximize2(21, '#eee', 1.5)}
 </button>
