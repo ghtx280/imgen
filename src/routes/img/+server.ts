@@ -62,7 +62,7 @@ export const GET: RequestHandler = async (e) => {
     let canvasRes = await generateImage(ctx, config);
 
 
-    return new Response(canvas.toBuffer('image/webp', 75), {
+    return new Response(canvas.toBuffer('image/webp'), {
         headers: {
             'Content-Type': 'image/webp',
         },

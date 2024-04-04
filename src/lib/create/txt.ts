@@ -1,6 +1,6 @@
-import type { ItemThis, LayerTxt, OriginX, OriginY } from '$lib/types.js';
-import { hex, toNum } from '../helpers.js';
-import wrapText from '../../routes/img/wrapText.js';
+import type { ItemThis, LayerTxt, OriginX, OriginY } from '$lib/types';
+import { hex, toNum } from '../helpers';
+import wrapText from '../../routes/img/wrapText';
 
 const origin = {
     s: 'start',
@@ -51,12 +51,11 @@ export default async function(this: ItemThis, p: LayerTxt) {
     }
 
     setStyles()
-
     
 
     let wrappedText = wrapText(
         this.ctx,
-        data,
+        data as string,
         0,
         0,
         toNum(p.max) || cw - x,
@@ -66,22 +65,41 @@ export default async function(this: ItemThis, p: LayerTxt) {
         p
     );
 
-    wrappedText.forEach((i) => {
+    
+
+    wrappedText.lines.forEach(({ text, x, y }) => {
         // stroke text
         if (toNum(p.bw)) {
             setStyles()
             this.ctx.strokeStyle = hex(p.bc || "#000000");
             this.ctx.lineWidth = toNum(p.bw) || 0 
-            this.ctx.strokeText(i[0], i[1], i[2])
+            this.ctx.strokeText(text, x, y)
         }
 
         // fill text
         setStyles()
-        this.ctx.fillText(i[0], i[1], i[2])
+        this.ctx.fillText(text, x, y)
         
         // this.ctx.
         
     });
 
+    // p.$w = wrappedText.width
+    // p.$h = wrappedText.count * size
+
+    // const caclOrigin = (w: number) => ({
+    //     s: w,
+    //     c: w / 2,
+    //     e: 0
+    // })
+
+    // p.$x = ox == "s" ? 0 : ox == "c" ? -p.$w : -p.$w
+
     this.ctx.restore();
+
+    // this.ctx.strokeStyle = "#173f8a"
+    // this.ctx.lineWidth = 2
+    // this.ctx.beginPath()
+    // this.ctx.rect(x, y, p.$w, p.$h)
+    // this.ctx.stroke()
 }

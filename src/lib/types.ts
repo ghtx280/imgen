@@ -24,6 +24,12 @@ export type LayerBase = {
     o?: Origin
     bc?: string
     bw?: number
+
+    $x?: number
+    $y?: number
+    $w?: number
+    $h?: number
+    $s?: boolean
 }
 
 export type LayerImg = {
