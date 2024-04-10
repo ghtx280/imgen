@@ -22,7 +22,7 @@
 </script>
 
 <aside class="b-1 max-w-200 rel *:pointer">
-    <button flex="space" class="p-8 w-full" on:click={() => (hidden = !hidden)}>
+    <button flex="20 space" class="p-8 w-full" on:click={() => (hidden = !hidden)}>
         <p class="ui-select-title">
             {sel.value || '-'}
         </p>

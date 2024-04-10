@@ -5,6 +5,7 @@
     import Input from '$lib/ui/Input.svelte';
     import Move from '$lib/ui/Move.svelte';
     import Origin from '$lib/ui/Origin.svelte';
+    import Select from '$lib/ui/Select.svelte';
     import TextArea from '$lib/ui/TextArea.svelte';
 
     $: $config.layers[$current] ||= {};
@@ -41,20 +42,11 @@
 
 <div class="">
     <span>Font</span>
-    <div class="mt-10">
-        <select
-            on:change={(e) => {
-                $config.layers[$current].f = e.target.value;
-                $config = $config;
-                setTimeout(() => ($config = $config), 100);
-                setTimeout(() => ($config = $config), 500);
-            }}
-            bind:value={$config.layers[$current].f}>
-            <option selected value={''}>-</option>
-            {#each fontNames as name}
-                <option value={name}>{name}</option>
-            {/each}
-        </select>
+    <div class="my-10">
+        <Select
+            options={fontNames.map((e) => ({ value: e, class: 'ff-' + e.replace(/\s/, '_') }))}
+            selected={0}
+            bind:value={$config.layers[$current].f} />
     </div>
 </div>
 
@@ -66,11 +58,15 @@
 
     <div flex="start center 10">
         <span text="16 mono">weight</span>
-        <select on:change={(e) => ($config.layers[$current].w = e.target.value)}>
+        <Select
+            options={[1, 2, 3, 4, 5, 6, 7, 8, 9].map((e) => e + '00')}
+            selected={0}
+            bind:value={$config.layers[$current].w} />
+        <!-- <select on:change={(e) => ($config.layers[$current].w = e.target.value)}>
             {#each [1, 2, 3, 4, 5, 6, 7, 8, 9] as item}
                 <option value="{item}00">{item}00</option>
             {/each}
-        </select>
+        </select> -->
     </div>
 </div>
 
