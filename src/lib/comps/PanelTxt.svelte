@@ -62,11 +62,6 @@
             options={[1, 2, 3, 4, 5, 6, 7, 8, 9].map((e) => e + '00')}
             selected={0}
             bind:value={$config.layers[$current].w} />
-        <!-- <select on:change={(e) => ($config.layers[$current].w = e.target.value)}>
-            {#each [1, 2, 3, 4, 5, 6, 7, 8, 9] as item}
-                <option value="{item}00">{item}00</option>
-            {/each}
-        </select> -->
     </div>
 </div>
 
