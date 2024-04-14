@@ -18,6 +18,7 @@
     import { goto } from '$app/navigation';
     import { stringifyLayer } from '$lib/stringifyLayer';
     import Tip from '$lib/ui/Tip.svelte';
+    import type { PageData } from './$types';
 
     let ctx: Ctx | undefined | null;
     let canvas: Canvas | undefined | null;
@@ -178,7 +179,15 @@
             }
         });
     });
+
+    export let data: PageData;
 </script>
+
+<div class="preload_fonts flex abs select-none events-none z--999">
+    {#each data.fontNames as item}
+        <span style="font-family: {item}; color: transparent !important">{item}</span>
+    {/each}
+</div>
 
 <Tip />
 

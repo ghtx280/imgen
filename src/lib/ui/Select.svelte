@@ -31,7 +31,7 @@
 
     {#if !hidden}
         <div
-            class="ui-select-options py-3 abs z-9 max-h-200 w-full bg-#111 b-1 over-y-auto"
+            class="ui-select-options py-3 abs z-9 max-h-180 w-full bg-#111 b-1 over-y-auto"
             transition:slide={{ duration: 200 }}
             flex="col">
             {#each formatOptions as e, i}

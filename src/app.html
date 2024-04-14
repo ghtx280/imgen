@@ -3,8 +3,8 @@
 
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" href="/favicon.png" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="favicon.png" type="image/png">
 	<meta name="viewport" content="width=device-width, initial-scale=0.75" />
 
 	<!-- Primary Meta Tags -->
@@ -94,6 +94,15 @@
 
 	<!-- BLICKCSS -->
 	<script src="https://unpkg.com/blickcss@2.1.12"></script>
+	<script>
+		blick.config({
+			class: {
+				events: {
+					_prop: "pointer-events:$"
+				}
+			}
+		})
+	</script>
 	<script src="https://unpkg.com/rem-mode-blickcss"></script>
 	<script>RemMode()(blick)</script>
 </head>
