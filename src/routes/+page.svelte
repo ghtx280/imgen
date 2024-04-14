@@ -175,12 +175,12 @@
             $config = local ? parseConfig(local) : $config;
         } catch (error) {}
 
-        addEventListener('keydown', (ev) => {
-            if (ev.ctrlKey && ev.key == 'c') {
-                ev.preventDefault();
-                copyLink();
-            }
-        });
+        // addEventListener('keydown', (ev) => {
+        //     if (ev.ctrlKey && ev.key == 'c') {
+        //         ev.preventDefault();
+        //         copyLink();
+        //     }
+        // });
 
         loaded = true;
     });

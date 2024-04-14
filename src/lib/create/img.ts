@@ -1,5 +1,5 @@
 import type { ItemThis, LayerShp } from "$lib/types";
-import { CreateStroke, hex, parseOrigin, toNum } from "../helpers";
+import { CreateStroke, getRound, hex, parseOrigin, toNum } from "../helpers";
 
 const origin = (v: number) => ({
     s: 0,
@@ -35,7 +35,7 @@ export default async function(this: ItemThis, p: LayerShp) {
     
 
     let region = new Path2D();
-    region.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0);
+    region.roundRect(x, y, p.w, p.h, getRound(p));
     this.ctx.clip(region, 'evenodd');
 
 

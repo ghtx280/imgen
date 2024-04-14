@@ -1,5 +1,5 @@
 import type { Ctx, ItemThis, LayerShp } from "$lib/types";
-import { CreateStroke, hex, parseOrigin, toNum } from "../helpers";
+import { CreateStroke, getRound, hex, parseOrigin, toNum } from "../helpers";
 
 
 const origin = (v: number) => ({
@@ -18,6 +18,8 @@ const origin = (v: number) => ({
 //         ctx.roundRect(x, y, p.w, p.h, toNum(p.rd) || 0);
 //     }
 // }
+
+
 
 export default async function(this: ItemThis, p: LayerShp) {
     p.w = toNum(p.w) ?? this.config.width;
@@ -40,7 +42,8 @@ export default async function(this: ItemThis, p: LayerShp) {
 
         this.ctx.fillStyle = hex(p.c || "#000000")
         this.ctx.beginPath();
-        this.ctx.roundRect(x, y, p.w, p.h, [toNum(p.rd) || 0]);
+        
+        this.ctx.roundRect(x, y, p.w, p.h, getRound(p));
         this.ctx.fill();
         
     }

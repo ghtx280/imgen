@@ -28,7 +28,7 @@ export function CreateStroke(ctx: Ctx, p: LayerBase & LayerShp, x: number, y: nu
         ctx.beginPath();
         ctx.strokeStyle = hex(p.bc || "#000000");
         ctx.lineWidth = toNum(p.bw) || 0
-        ctx.roundRect(x, y, p.w || 0, p.h || 0, toNum(p.rd) || 0)
+        ctx.roundRect(x, y, p.w || 0, p.h || 0, getRound(p))
         ctx.stroke()
         ctx.restore();
     }
@@ -56,7 +56,7 @@ export function drag(node: HTMLElement, callback: DragCallback) {
         const t = event.target as HTMLElement
         // console.log(t == node || t.tagName !== "INPUT");
         
-        if (t == node) 
+        if (t == node || t.tagName == "CANVAS") 
             event.preventDefault?.();
         if (pressed) callback(event, speed);
     }
@@ -83,4 +83,15 @@ export function drag(node: HTMLElement, callback: DragCallback) {
         }
         previousTouch = touch;
     });
+}
+
+
+export function getRound(p: any) {
+    const r = toNum(p.rd) || 0
+    const rtl = toNum(p.rdtl) || 0
+    const rtr = toNum(p.rdtr) || 0
+    const rbl = toNum(p.rdbl) || 0
+    const rbr = toNum(p.rdbr) || 0
+    
+    return [rtl | r, rtr | r, rbr | r, rbl | r]
 }

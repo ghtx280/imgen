@@ -30,6 +30,12 @@ export default async function(this: ItemThis, p: LayerTxt) {
     let ox = (p.o?.[0] as OriginX) || 's'
     let oy = (p.o?.[1] as OriginY) || 't'
 
+    // TODO: FIX THIS!!!
+    if (font.toLowerCase().includes("emoji")) {
+        ox = "s"
+        oy = "m"  
+    }
+
     
     
 
