@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" href="favicon.png" type="image/png">
-	<meta name="viewport" content="width=device-width, initial-scale=0.75" />
+	<meta name="viewport" content="width=device-width, initial-scale=0.9" />
 
 	<!-- Primary Meta Tags -->
 	<title>IMGENX - Image generator by URL</title>
@@ -34,6 +34,16 @@
 	<link rel="canonical" href="https://imgenx.vercel.app/" />
 	<meta http-equiv="content-language" content="en" />
 	<meta name="copyright" content="Copyright © 2024 IMGENX">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
+	<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+	<script>
+		Coloris({
+			swatches: [],
+			// wrap: false,
+
+		})
+	</script>
 
 
 
@@ -88,6 +98,62 @@
 		option {
 			color: #fff !important;
 			background: #111 !important;
+		}
+
+		::-webkit-scrollbar {
+			width: 3px;
+			height: 3px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: white;
+		}
+
+		.clr-picker {
+			background: #111;
+			border: 1px solid #fff;
+		}
+
+		.clr-picker,
+		.clr-color {
+			border-radius: 0 !important;
+
+		}
+
+		.clr-color {
+			background: #000 !important;
+			color: #fff !important;
+		}
+
+		.clr-alpha,
+		.clr-hue {
+			height: 15px !important;
+			border-radius: 0 !important;
+			width: 100%;
+			margin: 5px 10px;
+		}
+
+		.clr-gradient {
+			margin-bottom: 5px !important;
+			border-radius: 0 !important;
+		}
+
+		.clr-field {
+			display: none !important;
+		}
+
+		.anim-pulse {
+			animation: pulse 3s infinite alternate;
+		}
+
+		@keyframes pulse {
+			0% {
+				scale: 1
+			}
+
+			100% {
+				scale: 1.2
+			}
 		}
 	</style>
 

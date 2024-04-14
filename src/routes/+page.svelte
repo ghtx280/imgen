@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { fade } from 'svelte/transition';
     import type { Canvas, Ctx } from '$lib/types';
 
     import { generateImage } from '$lib/generate';
@@ -143,7 +144,7 @@
             xxx += (ev?.movementX || 0) / canvasScale;
             yyy += (ev?.movementY || 0) / canvasScale;
         } else {
-            const layer = $config.layers[$current];
+            const layer = $config.layers[$current] as { x: number; y: number };
             layer.x = speed(layer.x, (ev.movementX * 2) / canvasScale, ev);
             layer.y = speed(layer.y, (ev.movementY * 2) / canvasScale, ev);
             $config = $config;
@@ -164,6 +165,8 @@
         }
     }
 
+    let loaded = false;
+
     onMount(() => {
         local = $page.url.search;
 
@@ -178,10 +181,18 @@
                 copyLink();
             }
         });
+
+        loaded = true;
     });
 
     export let data: PageData;
 </script>
+
+{#if !loaded}
+    <div class="fullscreen z-99999 bg-#111" flex="center" transition:fade>
+        <img class="sq-100 anim-pulse" src="/favicon.svg" alt="IMGENX" />
+    </div>
+{/if}
 
 <div class="preload_fonts flex abs select-none events-none z--999">
     {#each data.fontNames as item}
@@ -206,7 +217,10 @@
 <div class="h-100dvh flex bg-#111 *:c-#eee" flex="m-lg:col">
     <div id="сanvas_panel" class="w-full rel h-50% lg:h-full over-hidden" flex="col center" use:drag={moveCanvas}>
         <!-- <div class="sq-full over-auto" flex="center"> -->
-        <canvas bind:this={canvas} class="m-50" style:transform={`scale(${canvasScale}) translate(${xxx}px, ${yyy}px)`}>
+        <canvas
+            bind:this={canvas}
+            class="m-50 b-1 bc-f"
+            style:transform={`scale(${canvasScale}) translate(${xxx}px, ${yyy}px)`}>
         </canvas>
         <!-- </div> -->
 
@@ -215,8 +229,8 @@
         </p> -->
 
         <div class="abs bottom-0 right-0 p-20 c-red">
-            <button class="btn" on:click={() => (canvasScale += 0.05)}>{@html icon.zoomIn(15)}</button>
-            <button class="btn" on:click={() => (canvasScale -= 0.05)}>{@html icon.zoomOut(15)}</button>
+            <button class="btn" on:click={() => (canvasScale += 0.1)}>{@html icon.zoomIn(15)}</button>
+            <button class="btn" on:click={() => (canvasScale -= 0.1)}>{@html icon.zoomOut(15)}</button>
         </div>
     </div>
 

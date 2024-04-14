@@ -5,8 +5,6 @@ const fonts = import.meta.glob("/static/fonts/*/*.ttf")
 export const load: PageServerLoad = async (e) => {
 
     let fontNames: any = {}
-
-    console.log(fonts);
     
 
     Object.keys(fonts).map(e => {

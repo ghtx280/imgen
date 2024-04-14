@@ -1,8 +1,6 @@
 <script>
     import icon from '$lib/icon.js';
     import { config, current } from '$lib/store.js';
-    import { flip } from 'svelte/animate';
-    import { fade, fly } from 'svelte/transition';
 
     export let index, item;
 
@@ -55,7 +53,7 @@
     </button>
 
     <button
-        class="p-10 bg-$red c-f h-full"
+        class="p-10 h:bg-$red time-200 c-f h-full"
         on:click={(ev) => {
             $config.layers = $config.layers.filter((e, i) => i != index);
             $current = null;

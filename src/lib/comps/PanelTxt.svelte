@@ -42,27 +42,24 @@
 
 <div class="">
     <span>Font</span>
-    <div class="my-10">
+    <div class="my-10" flex="10">
         <Select
-            options={fontNames.map((e) => ({ value: e, class: 'ff-' + e.replace(/\s/, '_') }))}
+            width="250"
+            options={fontNames.map((e) => ({ value: e, class: 'ff-' + e.replace(/\s/g, '_') }))}
             selected={0}
             bind:value={$config.layers[$current].f} />
-    </div>
-</div>
-
-<hr />
-
-<div flex="20 ai-c" class="mt-20">
-    <!-- <span>Stroke Width</span> -->
-    <Color bind:value={$config.layers[$current].c} showHex={false} />
-
-    <div flex="start center 10">
-        <span text="16 mono">weight</span>
         <Select
             options={[1, 2, 3, 4, 5, 6, 7, 8, 9].map((e) => e + '00')}
             selected={0}
             bind:value={$config.layers[$current].w} />
     </div>
+</div>
+
+<hr />
+
+<div flex="10 col" class="mt-20">
+    <span>Color</span>
+    <Color bind:value={$config.layers[$current].c} />
 </div>
 
 <hr />

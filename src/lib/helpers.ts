@@ -35,7 +35,10 @@ export function CreateStroke(ctx: Ctx, p: LayerBase & LayerShp, x: number, y: nu
 }
 
 
-type DragEvent = Partial<MouseEvent & TouchEvent>
+type DragEvent = Partial<MouseEvent & TouchEvent> & {
+    movementX: number;
+    movementY: number;
+}
 
 type SpeedFunc = (value: string | number, movement: any, ev: DragEvent) => number
 
@@ -50,11 +53,19 @@ export function drag(node: HTMLElement, callback: DragCallback) {
     let previousTouch: any = null;
 
     function ffff(event: DragEvent) {
-        event.preventDefault?.();
+        const t = event.target as HTMLElement
+        // console.log(t == node || t.tagName !== "INPUT");
+        
+        if (t == node) 
+            event.preventDefault?.();
         if (pressed) callback(event, speed);
     }
 
-    node.addEventListener('mousedown', () => (pressed = true));
+    node.addEventListener('mousedown', (ev) => {
+        if (ev.buttons == 1) {
+            pressed = true
+        }
+    });
     addEventListener('mouseup', () => (pressed = false));
     node.addEventListener('touchstart', () => (pressed = true));
     addEventListener('touchend', () => (pressed = false));
