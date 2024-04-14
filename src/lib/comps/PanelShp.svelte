@@ -49,7 +49,7 @@
 <hr />
 
 <div class="">
-    <span>Fill</span>
+    <span>Color</span>
     <div flex="10 ai-c" class="mt-10">
         <Color bind:value={$config.layers[$current].c} />
     </div>
@@ -58,7 +58,7 @@
 <hr />
 
 <div class="">
-    <span>Stroke</span>
+    <span>Border</span>
     <div flex="10 ai-c" class="mt-10">
         <Input label="w" bind:value={$config.layers[$current].bw} min={0} />
         <Color bind:value={$config.layers[$current].bc} />

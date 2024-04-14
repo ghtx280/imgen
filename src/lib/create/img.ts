@@ -11,10 +11,10 @@ const origin = (v: number) => ({
 })
 
 export default async function(this: ItemThis, p: LayerShp) {
+    p.x = toNum(p.x) ?? 0;
+    p.y = toNum(p.y) ?? 0;
     p.w = toNum(p.w) ?? this.config.width;
     p.h = toNum(p.h) ?? this.config.height;
-    p.x = toNum(p.x) ?? this.config.height / 2;
-    p.y = toNum(p.y) ?? this.config.height / 2;
 
     this.ctx.save();
     

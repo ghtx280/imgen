@@ -19,7 +19,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
     let y = toNum(p.y) ?? 0;
 
     let rotate = toNum(p.r) || 0;
-    let color = p.c || 'black';
+    let color = p.c || '#000000';
     let font = p.f || 'Inter, sans-serif';
     let size = p.s || 16;
 
@@ -64,7 +64,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
         data as string,
         0,
         0,
-        toNum(p.max) || cw - x,
+        toNum(p.mw) || cw - x,
         p.lh ? size * (p.lh / 10) : size * 15,
         ox,
         oy,

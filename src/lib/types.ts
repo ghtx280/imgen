@@ -32,27 +32,32 @@ export type LayerBase = {
     $s?: boolean
 }
 
-export type LayerImg = {
+export type LayerRectLike = {
     w?: number
     h?: number
     rd?: number
-} & LayerBase
+    rdbr?: number
+    rdbl?: number
+    rdtr?: number
+    rdtl?: number
+}
+
+export type LayerImg = LayerRectLike & LayerBase
 
 export type LayerShp = {
-    w?: number
-    h?: number
-    rd?: number
     c?: string
-} & LayerBase
+} & LayerRectLike & LayerBase
 
 export type LayerTxt = {
     f?: string
     c?: string
     w?: number
     s?: number
-    max?: number
+    mw?: number
     lh?: number
 } & LayerBase
+
+export type LayerKeys =  keyof (LayerImg & LayerShp & LayerTxt)
 
 export type Ctx = CanvasRenderingContext2D | SKRSContext2D
 export type Canvas = HTMLCanvasElement

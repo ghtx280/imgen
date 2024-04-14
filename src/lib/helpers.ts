@@ -9,7 +9,7 @@ export function hex0x(color: string) {
 }
 
 export function toNum(num: any) {
-    if (num !== undefined || num !== null) {
+    if (num !== undefined && num !== null) {
         return Number(num)
     }
 }

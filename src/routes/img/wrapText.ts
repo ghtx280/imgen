@@ -17,7 +17,7 @@ export default function(
     maxWidth: number, 
     lineHeight: number, 
     ox: "s" | "c" | "e", 
-    oy: number, 
+    oy: "t" | "m" | "b", 
     p: LayerBase
 ) {
     // First, start by splitting all of our text into words, but splitting it into an array split by spaces

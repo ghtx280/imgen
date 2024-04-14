@@ -1,6 +1,6 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
-    import type { Canvas, Ctx } from '$lib/types';
+    import type { Canvas, Ctx, LayerBase, LayerKeys } from '$lib/types';
 
     import { generateImage } from '$lib/generate';
     import { browser, dev } from '$app/environment';
@@ -31,16 +31,67 @@
     }
 
     function createLinkData(c: any) {
+        // c:45!0x000000~0xff0000
+
+        const ignore_base = {
+            x: '0',
+            y: '0',
+            c: ['0x000000', '#000000'],
+            r: ['-360', '0', '360'],
+            o: 'st',
+            bw: '0',
+            bc: ['0x000000', '#000000']
+        };
+
+        const ignore_rect_like = {
+            w: [c.width + '', '0'],
+            h: [c.height + '', '0'],
+            rd: '0',
+            rdbr: '0',
+            rdbl: '0',
+            rdtr: '0',
+            rdtl: '0'
+        };
+
+        const ignore = {
+            shp: { ...ignore_base, ...ignore_rect_like },
+            img: { ...ignore_base, ...ignore_rect_like },
+            txt: {
+                ...ignore_base,
+                s: ['0', '16'],
+                f: 'Inter'
+            }
+        } as const;
+
         return `s=${c.width}x${c.height}&fill=${hex0x(c.fill)}&l=${c.layers
             .map((e: any) => {
+                let type = e.type as LayerBase['type'];
                 return (
-                    e.type +
+                    type +
                     ':' +
                     encode(e.data?.$name || e.data) +
                     ';' +
                     Object.entries(e)
-                        .map(([k, v]) => {
-                            if (k !== 'data' && k !== 'type' && !k.startsWith('$')) {
+                        .map((q) => {
+                            const k = q[0] as LayerKeys;
+                            const v = q[1] as string | number;
+
+                            const ignoreType = ignore[type] as {
+                                [key in LayerKeys]: string | string[];
+                            };
+                            const ign = ignoreType[k];
+
+                            // дописати іф ігнор ну таке крч
+
+                            if (typeof ign == 'object' && ign.includes(v + '')) return null;
+
+                            if ((typeof ign == 'number' || typeof ign == 'string') && ign == v + '') return null;
+
+                            if (k == 'bc' && !ignore_base.bc.includes(v + '') && e.bw == 0) {
+                                return null;
+                            }
+
+                            if (!['data', 'type'].includes(k) && k[0] !== '$') {
                                 return `${k}:${['c', 'bc'].includes(k) ? hex0x(v as string) : v}`;
                             }
                         })
@@ -49,6 +100,8 @@
                 );
             })
             .join('|')}`;
+
+        let a = [1, 'fd'];
     }
 
     let local: any = null;
