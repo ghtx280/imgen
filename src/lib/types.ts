@@ -30,6 +30,8 @@ export type LayerBase = {
     $w?: number
     $h?: number
     $s?: boolean
+
+    $disableSelect?: boolean
 }
 
 export type LayerRectLike = {
@@ -42,13 +44,15 @@ export type LayerRectLike = {
     rdtl?: number
 }
 
-export type LayerImg = LayerRectLike & LayerBase
+export type LayerImg = LayerRectLike & LayerBase & { type: "img" }
 
 export type LayerShp = {
+    type: "shp"
     c?: string
 } & LayerRectLike & LayerBase
 
 export type LayerTxt = {
+    type: "txt"
     f?: string
     c?: string
     w?: number

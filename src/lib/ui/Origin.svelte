@@ -1,5 +1,5 @@
 <script>
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
 
     export let ignore;
 

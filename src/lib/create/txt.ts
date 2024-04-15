@@ -36,6 +36,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
         oy = "m"  
     }
 
+    p.lh = toNum(p.lh) || 15
     
     
 
@@ -56,8 +57,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
         this.ctx.textBaseline = origin[oy] as CanvasTextBaseline;
     }
 
-    setStyles()
-    
+    setStyles()    
 
     let wrappedText = wrapText(
         this.ctx,
@@ -65,7 +65,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
         0,
         0,
         toNum(p.mw) || cw - x,
-        p.lh ? size * (p.lh / 10) : size * 15,
+        size * (p.lh / 10),
         ox,
         oy,
         p
@@ -73,7 +73,7 @@ export default async function(this: ItemThis, p: LayerTxt) {
 
     
 
-    wrappedText.lines.forEach(({ text, x, y }) => {
+    wrappedText.lines.forEach(({ text, x, y, w, h }) => {
         // stroke text
         if (toNum(p.bw)) {
             setStyles()
@@ -81,17 +81,30 @@ export default async function(this: ItemThis, p: LayerTxt) {
             this.ctx.lineWidth = toNum(p.bw) || 0 
             this.ctx.strokeText(text, x, y)
         }
+        
 
         // fill text
         setStyles()
         this.ctx.fillText(text, x, y)
+
+        // this.ctx.strokeStyle = 'red';
+        // this.ctx.lineWidth = 2;
+        // this.ctx.strokeRect(x, y, w, h);
         
         // this.ctx.
         
     });
 
-    // p.$w = wrappedText.width
-    // p.$h = wrappedText.count * size
+    
+    
+
+    p.$w = toNum(p.mw) || wrappedText.width
+    p.$h = size + ((wrappedText.count - 1) * (size * (p.lh / 10)))
+
+
+    // console.log(p.$h);
+
+    // p.$h = wrappedText.height
 
     // const caclOrigin = (w: number) => ({
     //     s: w,

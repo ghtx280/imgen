@@ -1,4 +1,5 @@
-import type { Ctx, LayerBase } from "$lib/types";
+import { toNum } from "$lib/helpers";
+import type { Ctx, LayerBase, LayerTxt } from "$lib/types";
 
 
 
@@ -18,7 +19,7 @@ export default function(
     lineHeight: number, 
     ox: "s" | "c" | "e", 
     oy: "t" | "m" | "b", 
-    p: LayerBase
+    p: LayerBase & LayerTxt
 ) {
     // First, start by splitting all of our text into words, but splitting it into an array split by spaces
     let words = text.split(' ').filter(Boolean);
@@ -37,13 +38,19 @@ export default function(
     let lineArray = [];
     let linesCount = 1
     let totalWidth = 0
+    let totalHeight = toNum(p.s)
 
 
     for (var n = 0; n < words.length; n++) {
 
         testLine += `${words[n]}${space ? ' ' : ''}`;
         let metrics = ctx.measureText(testLine);
-        let testWidth = caclOrigin(metrics.width)[ox]
+        // let testWidth = caclOrigin(metrics.width)[ox]
+        let originalWidth = metrics.width
+        let testWidth = caclOrigin(originalWidth)[ox]
+
+        // console.log(metrics);
+        
 
 
         if (testWidth > maxWidth && n > 0) {
@@ -55,21 +62,23 @@ export default function(
             }
             testLine = `${words[n]}${space ? ' ' : ''}`;
             linesCount++
+            // totalHeight += metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent + (toNum(p.s) / 2)  + lineHeight;
             
             
         } else {
             line += `${words[n]}${space ? ' ' : ''}`;
-            totalWidth = testWidth
+            totalWidth = originalWidth
         }
    
         if (n === words.length - 1) {
-            lineArray.push({ text: line, x, y, w: testWidth });
+            lineArray.push({ text: line, x, y, w: originalWidth, h: toNum(p.s) });
         }
     }
     // Return the line array
     return {
         lines: lineArray,
         count: linesCount,
-        width: totalWidth
+        width: totalWidth,
+        height: totalHeight
     };
 }

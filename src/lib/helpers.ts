@@ -56,7 +56,7 @@ export function drag(node: HTMLElement, callback: DragCallback) {
         const t = event.target as HTMLElement
         // console.log(t == node || t.tagName !== "INPUT");
         
-        if (t == node || t.tagName == "CANVAS") 
+        if (t == node || t?.tagName == "CANVAS") 
             event.preventDefault?.();
         if (pressed) callback(event, speed);
     }

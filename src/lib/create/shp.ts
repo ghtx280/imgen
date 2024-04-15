@@ -45,7 +45,7 @@ export default async function(this: ItemThis, p: LayerShp) {
         
         this.ctx.roundRect(x, y, p.w, p.h, getRound(p));
         this.ctx.fill();
-        
+
     }
 
     this.ctx.restore();

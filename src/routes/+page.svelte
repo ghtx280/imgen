@@ -5,7 +5,7 @@
     import { generateImage } from '$lib/generate';
     import { browser, dev } from '$app/environment';
     import { config, current } from '$lib/store';
-    import { drag, hex0x, type DragCallback } from '$lib/helpers';
+    import { drag, hex0x, type DragCallback, parseOrigin } from '$lib/helpers';
 
     import parseConfig from '../lib/parseConfig';
     import icon from '$lib/icon';
@@ -59,7 +59,9 @@
             txt: {
                 ...ignore_base,
                 s: ['0', '16'],
-                f: 'Inter'
+                f: 'Inter',
+                mw: '0',
+                lh: ['15', '0']
             }
         } as const;
 
@@ -133,7 +135,20 @@
         saved = true;
     }
 
-    async function render(cfg: any) {
+    function caclOrigin(p: number, s: number, o: string) {
+        return (
+            {
+                s: p,
+                c: p - s / 2,
+                e: p - s,
+                t: p,
+                m: p - s / 2,
+                b: p - s
+            }[o] ?? p
+        );
+    }
+
+    async function render(cfg: any = $config) {
         // console.log('render');
 
         ctx = ctx || canvas?.getContext('2d');
@@ -145,6 +160,42 @@
             ctx?.clearRect(0, 0, cfg.width, cfg.height);
 
             await generateImage(ctx, cfg);
+
+            if ($current !== null) {
+                ctx.save();
+                const p = $config.layers[$current] as any;
+
+                // const origin = (v: number) => ({
+                //     s: 0,
+                //     c: -v / 2,
+                //     e: -v,
+                //     t: 0,
+                //     m: -v / 2,
+                //     b: -v
+                // });
+
+                const ew = p.w || p.$w;
+                const eh = p.h || p.$h;
+                const ex = caclOrigin(p.x, ew, p.o?.[0] || 's');
+                const ey = caclOrigin(p.y, eh, p.o?.[1] || 't');
+
+                // let [ox, oy] = parseOrigin(p.o || 'st');
+
+                // let x = origin(p.w)[ox];
+                // let y = origin(p.h)[oy];
+
+                // const fx = caclOrigin(p.x, p.w || p.$w)[p.o?.[0] || 's'];
+                // const fy = caclOrigin(p.y, p.h || p.$h)[p.o?.[1] || 't'];
+
+                // ctx.translate(p.x, p.y);
+                // ctx.rotate(Math.PI / (180 / p.r));
+
+                // ctx.globalCompositeOperation = 'difference';
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(ex - 2, ey - 2, ew + 4, eh + 4);
+                ctx.restore();
+            }
 
             linkData = '?' + createLinkData(cfg).replace(/\s/g, '%20');
 
@@ -235,10 +286,120 @@
         //     }
         // });
 
+        canvas?.addEventListener('pointerdown', (event) => {
+            const target = event.target as HTMLCanvasElement;
+            const x = event.offsetX;
+            const y = event.offsetY;
+            const w = target.width;
+            const h = target.height;
+
+            for (const i in $config.layers) {
+                const e = $config.layers[i];
+
+                const ew = (e.type == 'txt' ? e.$w : e.w) || 0;
+                const eh = (e.type == 'txt' ? e.$h : e.h) || 0;
+                const ex = caclOrigin(e?.x || 0, ew || 0, e.o?.[0] || 's');
+                const ey = caclOrigin(e?.y || 0, eh || 0, e.o?.[1] || 't');
+
+                // console.log({ ex, ey, ew, eh });
+
+                if (x >= ex && x <= ex + ew && y >= ey && y <= ey + eh) {
+                    if (!e?.$disableSelect) {
+                        $current = +i;
+                        break;
+                    }
+                } else {
+                    $current = null;
+                }
+            }
+
+            // $config.layers.map((e: { x: number; y: number; w: number; h: number; $w: number; $h: number }, i) => {
+            //     const ex = e.x;
+            //     const ey = e.y;
+            //     const ew = e.w || e.$w;
+            //     const eh = e.h || e.$h;
+
+            //     if (x >= ex && x <= ex + ew && y >= ey && y <= ey + eh) {
+            //         $current = i;
+            //         return;
+            //     } else {
+            //         $current = null;
+            //     }
+
+            //     // ДОРОБИТИ ПОВОРОТ ЗОНИ ДЛЯ КЛІКА
+
+            //     // console.log({ e, ex, ey, ew, eh, event });
+            // });
+            // console.log($current);
+            render();
+        });
+
+        // canvas?.addEventListener('pointermove', (event) => {
+        //     const target = event.target as HTMLCanvasElement;
+        //     const x = event.offsetX;
+        //     const y = event.offsetY;
+        //     const w = target.width;
+        //     const h = target.height;
+
+        //     for (const i in $config.layers) {
+        //         const e = $config.layers[i] as {
+        //             x: number;
+        //             y: number;
+        //             w: number;
+        //             h: number;
+        //             $w: number;
+        //             $h: number;
+        //             o: string;
+        //         };
+
+        //         const ew = e.w || e.$w;
+        //         const eh = e.h || e.$h;
+        //         const ex = caclOrigin(e.x, ew, e.o?.[0] || 's');
+        //         const ey = caclOrigin(e.y, eh, e.o?.[1] || 't');
+
+        //         // console.log({ ex, ey, ew, eh });
+
+        //         if (x >= ex && x <= ex + ew && y >= ey && y <= ey + eh) {
+        //             // $current = i;
+        //             document.body.style.cursor = 'pointer';
+        //             break;
+        //         } else {
+        //             document.body.style.cursor = '';
+        //             // $current = null;
+        //         }
+        //     }
+
+        //     // $config.layers.map((e: { x: number; y: number; w: number; h: number; $w: number; $h: number }, i) => {
+        //     //     const ex = e.x;
+        //     //     const ey = e.y;
+        //     //     const ew = e.w || e.$w;
+        //     //     const eh = e.h || e.$h;
+
+        //     //     if (x >= ex && x <= ex + ew && y >= ey && y <= ey + eh) {
+        //     //         $current = i;
+        //     //         return;
+        //     //     } else {
+        //     //         $current = null;
+        //     //     }
+
+        //     //     // ДОРОБИТИ ПОВОРОТ ЗОНИ ДЛЯ КЛІКА
+
+        //     //     // console.log({ e, ex, ey, ew, eh, event });
+        //     // });
+        //     // console.log($current);
+        //     render();
+        // });
+
         loaded = true;
     });
 
     export let data: PageData;
+
+    // function handleClickOnCanvas(event: MouseEvent | TouchEvent) {
+    //     // console.log(event);
+
+    //     // console.log(event);
+    // }
 </script>
 
 {#if !loaded}
@@ -268,7 +429,20 @@
 {/if}
 
 <div class="h-100dvh flex bg-#111 *:c-#eee" flex="m-lg:col">
-    <div id="сanvas_panel" class="w-full rel h-50% lg:h-full over-hidden" flex="col center" use:drag={moveCanvas}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
+        id="сanvas_panel"
+        class="w-full rel h-50% lg:h-full over-hidden"
+        flex="col center"
+        use:drag={moveCanvas}
+        on:click={(e) => {
+            // @ts-ignore
+            if (e.target?.tagName !== 'CANVAS') {
+                $current = null;
+                render();
+            }
+        }}>
         <!-- <div class="sq-full over-auto" flex="center"> -->
         <canvas
             bind:this={canvas}
@@ -305,6 +479,36 @@
 
                 <button class="btn" flex="10 ai-c center" class:invisible={$current == null} on:click={copyLayer}>
                     {@html icon.copy(17)}
+                </button>
+
+                <button
+                    class="btn h:bg-$red"
+                    flex="10 ai-c center"
+                    class:invisible={$current == null}
+                    on:click={() => {
+                        // $config.layers = $config.layers.filter((e, i) => i != $current);
+                        $current = null;
+                    }}>
+                    {@html icon.trash2(17)}
+                </button>
+                <!-- TODO: fix this -->
+                <button
+                    class="btn"
+                    flex="10 ai-c center"
+                    class:invisible={$current == null}
+                    class:bg-white={$current != null && !$config.layers[$current]?.$disableSelect}
+                    class:*:c-black={$current != null && !$config.layers[$current]?.$disableSelect}
+                    on:click={() => {
+                        // console.log($current, $config.layers[$current].$disableSelect);
+
+                        if ($current !== null) {
+                            $config.layers[$current].$disableSelect = !$config.layers[$current]?.$disableSelect;
+                        }
+
+                        // $config.layers = $config.layers.filter((e, i) => i != $current);
+                        // $current = null;
+                    }}>
+                    {@html icon.mousePointer(17)}
                 </button>
             </div>
 

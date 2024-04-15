@@ -1,6 +1,6 @@
 <script>
     import icon from '$lib/icon.js';
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
 
     export let index, item;
 

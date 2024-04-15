@@ -1,7 +1,7 @@
 <script>
     import { drag } from '$lib/helpers';
     import icon from '$lib/icon.js';
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
 
     function scaling(event, speed) {
         let obj = $config.layers[$current];

@@ -1,7 +1,7 @@
 <script>
     import { drag } from '$lib/helpers';
     import icon from '$lib/icon.js';
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
 
     function handleMove(event, speed) {
         $config.layers[$current].x = speed($config.layers[$current].x, event.movementX, event);

@@ -27,7 +27,7 @@
 
 <div flex="10 ai-c" class="mt-10">
     <Input label="lh" bind:value={$config.layers[$current].lh} min={1} max={500} />
-    <Input label="mw" bind:value={$config.layers[$current].max} min={0} max={2000} />
+    <Input label="mw" bind:value={$config.layers[$current].mw} min={0} max={9999} />
 </div>
 <hr />
 

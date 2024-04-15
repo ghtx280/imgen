@@ -20,6 +20,8 @@
             if (max !== null && value > max) {
                 value = max;
             }
+        } else {
+            value = 0;
         }
     };
 </script>

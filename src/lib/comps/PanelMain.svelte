@@ -2,7 +2,7 @@
     import { flip } from 'svelte/animate';
     import { fade } from 'svelte/transition';
     import PanelLayerBtn from './PanelLayerBtn.svelte';
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
     import Input from '$lib/ui/Input.svelte';
     import icon from '$lib/icon.js';
     import { parseLayer } from '$lib/parseConfig';
@@ -96,7 +96,7 @@
     <div flex="15 ai-c" class="mt-10">
         <span>Add</span>
         <button class="btn" on:click={add.img}>{@html icon.image(20, '#fff', 1)}</button>
-        <button class="btn" on:click={add.txt} text="300">T</button>
+        <button class="btn" on:click={add.txt}>{@html icon.type(20, '#fff', 1)}</button>
         <button class="btn" on:click={add.shp}>{@html icon.square(20, '#fff', 1)}</button>
         <button class="btn" on:click={add.raw}>{@html icon.code(20, '#fff', 1)}</button>
     </div>

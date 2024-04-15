@@ -1,5 +1,5 @@
 <script>
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
     import PanelImg from './PanelImg.svelte';
     import PanelShp from './PanelShp.svelte';
     import PanelTxt from './PanelTxt.svelte';

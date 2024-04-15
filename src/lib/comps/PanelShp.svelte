@@ -1,6 +1,6 @@
 <script>
     import { slide, fly, draw } from 'svelte/transition';
-    import { config, current } from '$lib/store.js';
+    import { config, current } from '$lib/store';
 
     import Input from '$lib/ui/Input.svelte';
     import Move from '$lib/ui/Move.svelte';

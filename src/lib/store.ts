@@ -1,9 +1,16 @@
 import { writable } from "svelte/store";
+import type { LayerImg, LayerShp, LayerTxt } from "./types";
 
-export let config = writable({
+export let config = writable<{
+    width: number,
+    height: number,
+    fill: string,
+    layers: (LayerImg | LayerShp | LayerTxt)[] 
+}>({
     width: 400,
     height: 400,
     fill: '#888888',
+    // sel: -1,
     layers: [
         // {
         //     type: 'txt',
@@ -26,10 +33,10 @@ export let config = writable({
     ],
 })
 
-export let current = writable(null)
+export let current = writable<null | number>(null)
 
 
-export let images = writable({})
+// export let images = writable({})
 
 
-export let panelOpen = writable(false)
+// export let panelOpen = writable(false)
