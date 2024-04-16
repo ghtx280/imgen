@@ -26,6 +26,8 @@
 
     let linkData: string = '';
 
+    $: console.log(linkData);
+
     function encode(str: string) {
         return str.replace(/&/g, '%26').replace(/\?/g, '%3F');
     }
@@ -82,6 +84,8 @@
                                 [key in LayerKeys]: string | string[];
                             };
                             const ign = ignoreType[k];
+
+                            console.log(k, v);
 
                             // дописати іф ігнор ну таке крч
 

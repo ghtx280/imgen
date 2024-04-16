@@ -82,8 +82,8 @@
 <div>
     <span>Canvas</span>
     <div flex="20 ai-c" class="mt-20">
-        <Input label="w" bind:value={$config.width} />
-        <Input label="h" bind:value={$config.height} />
+        <Input label="w" bind:value={$config.width} min={0} max={2000} />
+        <Input label="h" bind:value={$config.height} min={0} max={2000} />
         <Color bind:value={$config.fill} />
     </div>
     <div flex="20 ai-c" class="mt-10"></div>
