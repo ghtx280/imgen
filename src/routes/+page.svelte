@@ -296,8 +296,9 @@
             const y = event.offsetY;
             const w = target.width;
             const h = target.height;
+            const array = $config.layers;
 
-            for (const i in $config.layers) {
+            for (let i = array.length - 1; i >= 0; i--) {
                 const e = $config.layers[i];
 
                 const ew = (e.type == 'txt' ? e.$w : e.w) || 0;
@@ -316,6 +317,26 @@
                     $current = null;
                 }
             }
+
+            // for (const i in $config.layers) {
+            //     const e = $config.layers[i];
+
+            //     const ew = (e.type == 'txt' ? e.$w : e.w) || 0;
+            //     const eh = (e.type == 'txt' ? e.$h : e.h) || 0;
+            //     const ex = caclOrigin(e?.x || 0, ew || 0, e.o?.[0] || 's');
+            //     const ey = caclOrigin(e?.y || 0, eh || 0, e.o?.[1] || 't');
+
+            //     // console.log({ ex, ey, ew, eh });
+
+            //     if (x >= ex && x <= ex + ew && y >= ey && y <= ey + eh) {
+            //         if (!e?.$disableSelect) {
+            //             $current = +i;
+            //             break;
+            //         }
+            //     } else {
+            //         $current = null;
+            //     }
+            // }
 
             // $config.layers.map((e: { x: number; y: number; w: number; h: number; $w: number; $h: number }, i) => {
             //     const ex = e.x;
