@@ -1,0 +1,5 @@
+# v1 is secondary. Human pages (/ , /test) 301-redirect to https://imgenx.ghtx.me/
+# Crawling is allowed on purpose so Googlebot sees the redirect and consolidates on v2.
+# Image-generation endpoints stay fully crawlable/usable.
+User-agent: *
+Allow: /
