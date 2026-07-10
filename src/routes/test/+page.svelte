@@ -1,23 +1,15 @@
 <script lang="ts">
-
     function fff(node: HTMLCanvasElement) {
+        const canvas = node;
+        const ctx = canvas.getContext('2d');
 
-       const ctx = node.getContext("2d")
-
-       if (ctx) {
-
-        ctx.clearRect(0, 0, 300, 300)
-
-        ctx.fillStyle = "gray"
-        ctx.fillRect(0, 0, 300, 300)
-
-        ctx.fillStyle = "black"
-        ctx.font = "500 24px sans-serif"
-        ctx.fillText("fdfdd", 50, 50)
-       }
+        // help me, i need resizeble rectangle with mouse grad corners
         
-    }
 
+        //
+        document.body.className = '';
+    }
+    // }
 </script>
 
-<canvas use:fff width="300" height="300"></canvas>
+<canvas use:fff width="500" height="500" class="b-1"></canvas>

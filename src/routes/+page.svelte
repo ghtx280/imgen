@@ -26,7 +26,7 @@
 
     let linkData: string = '';
 
-    $: console.log(linkData);
+    // $: console.log(linkData);
 
     function encode(str: string) {
         return str.replace(/&/g, '%26').replace(/\?/g, '%3F');
@@ -85,7 +85,7 @@
                             };
                             const ign = ignoreType[k];
 
-                            console.log(k, v);
+                            // console.log(k, v);
 
                             // дописати іф ігнор ну таке крч
 
@@ -139,6 +139,7 @@
         saved = true;
     }
 
+    // p - position (x, y), s - size (w, h), o - origin (s, c, e, t, m, b)
     function caclOrigin(p: number, s: number, o: string) {
         return (
             {
@@ -169,24 +170,62 @@
                 ctx.save();
                 const p = $config.layers[$current] as any;
 
-                // const origin = (v: number) => ({
-                //     s: 0,
-                //     c: -v / 2,
-                //     e: -v,
-                //     t: 0,
-                //     m: -v / 2,
-                //     b: -v
-                // });
+                const origin = (v: number) => ({
+                    s: v / 2,
+                    c: 0,
+                    e: -v * 2,
+                    t: v / 2,
+                    m: 0,
+                    b: -v * 2
+                });
 
-                const ew = p.w || p.$w;
-                const eh = p.h || p.$h;
-                const ex = caclOrigin(p.x, ew, p.o?.[0] || 's');
-                const ey = caclOrigin(p.y, eh, p.o?.[1] || 't');
+                // console.log(p.r / 90);
+
+                // let ew = p.w || p.$w;
+                // let eh = p.h || p.$h;
+                // let ex = caclOrigin(p.x, ew, p.o?.[0] || 's');
+                // let ey = caclOrigin(p.y, eh, p.o?.[1] || 't');
+
+                let ew = p.w || p.$w;
+                let eh = p.h || p.$h;
+                let ex = p.x;
+                let ey = p.y;
+
+                let radians = (p.r * Math.PI) / 180;
 
                 // let [ox, oy] = parseOrigin(p.o || 'st');
 
-                // let x = origin(p.w)[ox];
-                // let y = origin(p.h)[oy];
+                let cx = p.x; // Координата x центру прямокутника
+                let cy = p.y; // Координата y центру прямокутника
+
+                let ox = caclOrigin(p.x, ew, p.o?.[0] || 's');
+                let oy = caclOrigin(p.y, eh, p.o?.[1] || 't');
+
+                let x1 = cx - (ew / 2) * Math.cos(radians) - (eh / 2) * Math.sin(radians);
+                let y1 = cy - (ew / 2) * Math.sin(radians) + (eh / 2) * Math.cos(radians);
+                let x2 = cx + (ew / 2) * Math.cos(radians) - (eh / 2) * Math.sin(radians);
+                let y2 = cy + (ew / 2) * Math.sin(radians) + (eh / 2) * Math.cos(radians);
+                let x3 = cx + (ew / 2) * Math.cos(radians) + (eh / 2) * Math.sin(radians);
+                let y3 = cy + (ew / 2) * Math.sin(radians) - (eh / 2) * Math.cos(radians);
+                let x4 = cx - (ew / 2) * Math.cos(radians) + (eh / 2) * Math.sin(radians);
+                let y4 = cy - (ew / 2) * Math.sin(radians) - (eh / 2) * Math.cos(radians);
+
+                let minX = Math.min(x1, x2, x3, x4);
+                let maxX = Math.max(x1, x2, x3, x4);
+                let minY = Math.min(y1, y2, y3, y4);
+                let maxY = Math.max(y1, y2, y3, y4);
+
+                let rw = maxX - minX;
+                let rh = maxY - minY;
+                let rx = minX;
+                let ry = minY;
+                // let rx = ox == 's' ? minX + rw / 2 : ox == 'e' ? minX + -(rw / 2) : minX;
+                // let ry = minY;
+
+                console.log(rx, ry);
+
+                // rx = origin(p.w)[ox];
+                // ry = origin(p.h)[oy];
 
                 // const fx = caclOrigin(p.x, p.w || p.$w)[p.o?.[0] || 's'];
                 // const fy = caclOrigin(p.y, p.h || p.$h)[p.o?.[1] || 't'];
@@ -197,7 +236,7 @@
                 // ctx.globalCompositeOperation = 'difference';
                 ctx.strokeStyle = 'blue';
                 ctx.lineWidth = 1;
-                ctx.strokeRect(ex - 2, ey - 2, ew + 4, eh + 4);
+                ctx.strokeRect(rx - 2, ry - 2, rw + 4, rh + 4);
                 ctx.restore();
             }
 
